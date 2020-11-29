@@ -219,3 +219,14 @@
 	<stddef.h>
 	<GL/gl.h>
 
+1606615572 source:d:\itb\sem 3\new folder (2)\project mabok grafkom\mabokgrafkom\main game\main.cpp
+	<GL/gl.h>
+	<GL/glu.h>
+	<GL/glut.h>
+	<iostream>
+	<windows.h>
+	<GLUT/glut.h>
+	<GL/glut.h>
+	<stdlib.h>
+	<fstream>
+

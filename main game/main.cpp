@@ -15,16 +15,18 @@ using namespace std;
 #include <fstream>
 
 int horizontal=0;
-int colliderWindowRight=85;
+int colliderWindowRight=78;
 int colliderWindowLeft=0;
 int colliderWindowTop=45;
-int colliderWIndowBottom=0;
-int posisiX1=42;
-int posisiX2=49;
+int colliderWindowBottom=0;
+float posisiDokter[4]={0,8,0,7};
 char MENU[1000];
 void cek(){
-    cout << "posisix: " << posisiX1 << "\n";
-    cout << "collR: " << colliderWindowRight<< "\n";
+    cout << "posisiKanan: " << posisiDokter[1] << "\n";
+    cout << "WindowRight: " << colliderWindowRight<< "\n";
+    cout << "posisiKiri: " << posisiDokter[0] << "\n";
+    cout << "WindowLeft: " << colliderWindowLeft<< "\n";
+    cout << "Translasi: " << horizontal<< "\n";
 
 
 }
@@ -49,7 +51,35 @@ void menu(){
 
     glPopMatrix();
 }
+void gerakDokter(int key, int x, int y){
+    cek();
+    if(GetAsyncKeyState(VK_RIGHT)){
+        if (posisiDokter[1]<=colliderWindowRight){
+            horizontal+=10;
+            posisiDokter[1]+=10;
+            posisiDokter[0]+=10;
+            glutPostRedisplay();
+        }
+    }
+    if (GetAsyncKeyState(VK_LEFT)){
+        if (posisiDokter[0]>=colliderWindowLeft){
+            horizontal-=10;
+            posisiDokter[1]-=10;
+            posisiDokter[0]-=10;
+            glutPostRedisplay();
+        }
+    }
 
+}
+
+void colliderDokter(){
+    glBegin(GL_POLYGON);
+    glVertex2f(posisiDokter[0],posisiDokter[3]);
+    glVertex2f(posisiDokter[0],posisiDokter[4]);
+    glVertex2f(posisiDokter[1],posisiDokter[4]);
+    glVertex2f(posisiDokter[1],posisiDokter[3]);
+    glEnd();
+}
 void dokterObject(){
     glBegin(GL_POLYGON); //APD luar
 	glColor3f(0.8f, 0.8f, 0.9f);
@@ -159,10 +189,72 @@ void dokterMove(){
     glScaled(1.1,1.1,0);
     dokterObject();
 	glPopMatrix();
-
 }
 
+void obatObject(){
+    glBegin(GL_POLYGON); //Badan obat1
+	glColor3f(0.0f,1.0f,0.0f);
+	glVertex2f(0,0);
+	glVertex2f(5,0);
+	glVertex2f(5,4);
+	glVertex2f(0,4);
+	glEnd();
 
+	glBegin(GL_POLYGON); //badan obat2
+	glColor3f(0.0f,1.0f,0.0f);
+	glVertex2f(4,4);
+	glVertex2f(4,5);
+	glVertex2f(1,5);
+	glVertex2f(1,4);
+	glEnd();
+
+	glBegin(GL_POLYGON); //badan obat3
+	glColor3f(0.0f,1.0f,0.0f);
+	glVertex2f(3.32,5);
+	glVertex2f(3.32,5.98);
+	glVertex2f(1.61,5.96);
+	glVertex2f(1.59,5);
+	glEnd();
+
+	glBegin(GL_POLYGON); //pencetan vertikal
+	glColor3f(1,1,1);
+	glVertex2f(2.59,5.98);
+	glVertex2f(2.59,6.99);
+	glVertex2f(2.4,6.99);
+	glVertex2f(2.4,5.97);
+	glEnd();
+
+	glBegin(GL_POLYGON); //pencetan horizontal
+	glColor3f(1,1,1);
+	glVertex2f(1.59,7.01);
+	glVertex2f(1.59,6.76);
+	glVertex2f(2.59,6.76);
+	glVertex2f(2.59,7.01);
+	glEnd();
+
+	glBegin(GL_POLYGON); //palang merah vertikal
+	glColor3f(1.0, 0.0, 0.0);
+	glVertex2f(2,3);
+	glVertex2f(3,3);
+	glVertex2f(3,1);
+	glVertex2f(2,1);
+	glEnd();
+
+    glBegin(GL_POLYGON); //palang merah horizontal
+    glColor3f(1.0, 0.0, 0.0);
+	glVertex2f(1.0,2.49);
+	glVertex2f(3.98,2.47);
+	glVertex2f(3.98,1.47);
+	glVertex2f(1.0,1.49);
+	glEnd();
+
+
+}
+void obatMove(){
+    glPushMatrix();
+    obatObject();
+	glPopMatrix();
+}
 
 
 void backgroundObject(){
@@ -440,6 +532,7 @@ void displayMe(void){
 
     backgroundObject();
     //menu();
+    colliderDokter();
 
 
 
@@ -459,26 +552,13 @@ void displayMe(void){
 	glVertex2f(65,40);
 	glEnd();
 
+    obatMove();
     dokterMove();
 
     glFlush();
 	glutSwapBuffers();
 }
 
-void gerakDokter(int key, int x, int y){
-    if(GetAsyncKeyState(VK_RIGHT)){
-        if (posisiX2<=colliderWindowRight){
-            horizontal+=10;
-            glutPostRedisplay();
-        }
-    }
-    if (GetAsyncKeyState(VK_LEFT)){
-        if (posisiX1>=colliderWindowLeft)
-            horizontal-=10;
-            glutPostRedisplay();
-    }
-    cek();
-}
 
 int main(int argc, char** argv){
 	glutInit(&argc, argv);
