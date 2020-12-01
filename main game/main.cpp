@@ -257,7 +257,7 @@ void obatObject(){
 
 void gerakObat(int data){
     obatObject();
-    for (vertikalObat; posisiObat[3]>=posisiDokter[2];vertikalObat=vertikalObat+1){
+    while (vertikalObat; posisiObat[3]>=posisiDokter[2];vertikalObat=vertikalObat+1){
         posisiObat[2]+=5;
         posisiObat[3]+=5;
         vertikalObat+=5;
