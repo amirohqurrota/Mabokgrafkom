@@ -15,8 +15,10 @@ using namespace std;
 #include <fstream>
 
 int horizontal=0;
+int vertikalObat=45;
+float posisiObat[4]={20,25,40,47};
 int colliderWindowRight=78;
-int colliderWindowLeft=0;
+int colliderWindowLeft=5;
 int colliderWindowTop=45;
 int colliderWindowBottom=0;
 float posisiDokter[4]={0,8,0,7};
@@ -71,7 +73,6 @@ void gerakDokter(int key, int x, int y){
     }
 
 }
-
 void colliderDokter(){
     glBegin(GL_POLYGON);
     glVertex2f(posisiDokter[0],posisiDokter[3]);
@@ -192,6 +193,8 @@ void dokterMove(){
 }
 
 void obatObject(){
+    glPushMatrix();
+    glTranslated(25,38,0);
     glBegin(GL_POLYGON); //Badan obat1
 	glColor3f(0.0f,1.0f,0.0f);
 	glVertex2f(0,0);
@@ -247,15 +250,35 @@ void obatObject(){
 	glVertex2f(3.98,1.47);
 	glVertex2f(1.0,1.49);
 	glEnd();
+	glPopMatrix();
 
 
 }
+
+void gerakObat(int data){
+    obatObject();
+    for (vertikalObat; posisiObat[3]>=posisiDokter[2];vertikalObat=vertikalObat+1){
+        posisiObat[2]+=5;
+        posisiObat[3]+=5;
+        vertikalObat+=5;
+        glutPostRedisplay();
+    }
+    glutPostRedisplay();
+    glutTimerFunc(1,gerakObat,0);
+}
+
 void obatMove(){
     glPushMatrix();
-    obatObject();
-	glPopMatrix();
+    glTranslated(0,vertikalObat,0);
+    glPopMatrix();
+
 }
 
+//void obatMove(){
+    //glPushMatrix();
+    //obatObject();
+	//glPopMatrix();
+//}
 
 void backgroundObject(){
     glPushMatrix();
@@ -532,17 +555,6 @@ void displayMe(void){
 
     backgroundObject();
     //menu();
-    colliderDokter();
-
-
-
-	glBegin(GL_POLYGON);
-	glColor3b(100,0,0);
-	glVertex2f(20,45);
-	glVertex2f(25,45);
-	glVertex2f(25,40);
-	glVertex2f(20,40);
-	glEnd();
 
     glBegin(GL_POLYGON);
 	glColor3b(0,0,100);
@@ -568,6 +580,7 @@ int main(int argc, char** argv){
 	glutCreateWindow("Hello world!");
 	glutSpecialFunc(gerakDokter);
 	glutDisplayFunc(displayMe);
+	glutTimerFunc(1,gerakObat,0);
 	gluOrtho2D(0, 85, 0, 45);
 	glutMainLoop();
 	return 0;
