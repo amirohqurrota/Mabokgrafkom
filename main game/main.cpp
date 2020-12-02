@@ -194,7 +194,8 @@ void dokterMove(){
 
 void obatObject(){
     glPushMatrix();
-    glTranslated(25,38,0);
+    glTranslated(25,30,0);
+    glTranslated(0,vertikalObat,0);
     glBegin(GL_POLYGON); //Badan obat1
 	glColor3f(0.0f,1.0f,0.0f);
 	glVertex2f(0,0);
@@ -255,30 +256,38 @@ void obatObject(){
 
 }
 
-void gerakObat(int data){
+void timerObat(int){
     obatObject();
-    for (vertikalObat; posisiObat[3]>=posisiDokter[2];vertikalObat=vertikalObat+1){
-        posisiObat[2]+=5;
-        posisiObat[3]+=5;
-        vertikalObat+=5;
-        glutPostRedisplay();
-    }
     glutPostRedisplay();
-    glutTimerFunc(1,gerakObat,0);
+    glutTimerFunc(1000/30,timerObat,0);
+    if (posisiObat[3]>=-0){
+        posisiObat[2]-=0.5;
+        posisiObat[3]-=0.5;
+        vertikalObat-=1;
+    }
+    else{
+        posisiObat[2]=40;
+        posisiObat[3]=47;
+        vertikalObat=45;
+    }
+
 }
 
-void obatMove(){
-    glPushMatrix();
-    glTranslated(0,vertikalObat,0);
-    glPopMatrix();
-
-}
 
 //void obatMove(){
     //glPushMatrix();
     //obatObject();
-	//glPopMatrix();
-//}
+    //while (posisiObat[3]>=posisiDokter[2]){
+        //cout << "CEK LOOPING  ";
+        //obatObject();
+        //posisiObat[2]-=5;
+        //posisiObat[3]-=5;
+        //vertikalObat-=5;
+        //glTranslated(0,vertikalObat,0);
+        //glutTimerFunc(1,gerakObat,0);
+        //glutPostRedisplay();
+    //}
+    //glPopMatrix();}
 
 void backgroundObject(){
     glPushMatrix();
@@ -564,7 +573,7 @@ void displayMe(void){
 	glVertex2f(65,40);
 	glEnd();
 
-    obatMove();
+    obatObject();
     dokterMove();
 
     glFlush();
@@ -579,8 +588,9 @@ int main(int argc, char** argv){
 	glutInitWindowPosition(0,0);
 	glutCreateWindow("Hello world!");
 	glutSpecialFunc(gerakDokter);
+	glutTimerFunc(0,timerObat,0);
 	glutDisplayFunc(displayMe);
-	glutTimerFunc(1,gerakObat,0);
+
 	gluOrtho2D(0, 85, 0, 45);
 	glutMainLoop();
 	return 0;
