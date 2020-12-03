@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<trays>
+    <tray visible="true" path="*\Tray" />
+    <tray visible="false" path="*\Tray 2" />
+</trays>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<script src="function.js"></script>
+<form name="biodata">
+    <pre>
+    Nama        : <input type="text" name="nama">
+    Nim         : <input type="number" name="nim">
+    Jns kelamin : <select name="Jenis Kelamin">
+        <option>Laki-laki
+        <option>Perempuan
+        </select>
+    Prodi       :<select name="prodi">
+        <option>SI
+        <option>TI
+        <option>IF
+    </select>
+    Angkatan    :<select name="angkatan">
+        <option>17
+        <option>18
+        <option>19
+        <option>20
+    </select>
+</pre> 
+    <input type="button" onclick="tampilkandata(biodata)" value="Simpan">
+    <input type="reset" value="Batal">
+</form>
+
+<table border="1" id="tabeldata" >
+    <tr>
+        <td>Nama</td>
+        <td>Nim</td>
+        <td>Jns Kelamin</td>
+        <td>Prodi</td>
+        <td>Angkatan</td>
+    </tr>
+</table>
+</body>
+</html>
