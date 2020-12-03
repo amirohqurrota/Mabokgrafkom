@@ -289,6 +289,22 @@ void timerObat(int){
     //}
     //glPopMatrix();}
 
+void timerVirus(int){
+    virusObject();
+    glutPostRedisplay();
+    glutTimerFunc(1000/30,timerVirus,0);
+    if (posisiVirus[3]>=-0){
+        posisiVirus[2]-=0.5;
+        posisiVirus[3]-=0.5;
+        vertikalVirus-=1;
+    }
+    else{
+        posisiVirus[2]=40;
+        posisiVirus[3]=47;
+        vertikalVirus=45;
+    }
+
+}
 void backgroundObject(){
     glPushMatrix();
     glScaled(0.57,0.43,0);
