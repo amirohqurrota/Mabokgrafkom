@@ -5,7 +5,7 @@ void displayMe(void){
     glClear(GL_COLOR_BUFFER_BIT);
 
     glBegin(GL_POLYGON); //langit biru
-	glColor3f(0.0f,0.5f,1.0f);
+	glColor3f(0.824, 0.937, 0.992);
 	glVertex2f(0, 36);
 	glVertex2f(0, 107);
 	glVertex2f(149, 107);
@@ -13,7 +13,7 @@ void displayMe(void){
 	glEnd();
 
 	glBegin(GL_POLYGON); //rumput hijau
-	glColor3f(0.0f,1.0f,0.0f);
+	glColor3f(0.2, 0.8, 0.4);
 	glVertex2f(0, 36);
 	glVertex2f(0, 17);
 	glVertex2f(149, 17);
@@ -21,7 +21,7 @@ void displayMe(void){
 	glEnd();
 
 	glBegin(GL_POLYGON); //tanah coklat muda seharusnya
-	glColor4f(1.0f,0.5f,0.0f,0.0f);
+	glColor3f(0.58, 0.467, 0.294);
 	glVertex2f(0, 18);
 	glVertex2f(0, 8);
 	glVertex2f(150, 8);
@@ -29,7 +29,7 @@ void displayMe(void){
 	glEnd();
 
 	glBegin(GL_POLYGON); //tanah coklat tua seharusnya
-	glColor3b(74,38,4);
+	glColor3f(0.467, 0.373, 0.239);
 	glVertex2f(0, 8);
 	glVertex2f(0, 0);
 	glVertex2f(150, 0);
@@ -37,7 +37,7 @@ void displayMe(void){
 	glEnd();
 
     glBegin(GL_POLYGON); //matahari
-    glColor4f(1.0f,1.0f,0.0f,0.0f);
+    glColor3f(1, 1, 0.4);
 	glVertex2f(18.74804, 103.75981);
 	glVertex2f(19.43656, 103.73829);
 	glVertex2f(20.2757, 103.58768);
@@ -147,7 +147,7 @@ void displayMe(void){
 	glEnd();
 
 	glBegin(GL_POLYGON); //atap kiri
-	glColor3f(0.1f,0.0f,0.0f);
+	glColor3f(0.4, 0.2, 0.2);
 	glVertex2f(48, 65);
 	glVertex2f(63, 65);
 	glVertex2f(63, 60);
@@ -163,7 +163,7 @@ void displayMe(void){
 	glEnd();
 
 	glBegin(GL_POLYGON); //kaca kiri atas
-	glColor3f(0.5f,1.0f,1.0f);
+	glColor3f(0.4, 0.6, 1);
 	glVertex2f(54, 57);
 	glVertex2f(54, 51);
 	glVertex2f(59, 51);
@@ -171,7 +171,7 @@ void displayMe(void){
 	glEnd();
 
 	glBegin(GL_POLYGON); //kaca kiri bawah
-	glColor3f(0.5f,1.0f,1.0f);
+	glColor3f(0.4, 0.6, 1);
 	glVertex2f(54, 47);
 	glVertex2f(54, 41);
 	glVertex2f(59, 41);
@@ -179,7 +179,7 @@ void displayMe(void){
 	glEnd();
 
 	glBegin(GL_POLYGON); //atap tengah
-	glColor3f(0.1f,0.0f,0.0f);
+	glColor3f(0.4, 0.2, 0.2);
 	glVertex2f(62, 81);
 	glVertex2f(62, 76);
 	glVertex2f(91, 76);
@@ -195,7 +195,7 @@ void displayMe(void){
 	glEnd();
 
 	glBegin(GL_POLYGON); //kaca tengah kiri
-	glColor3f(0.5f,1.0f,1.0f);
+	glColor3f(0.4, 0.6, 1);
 	glVertex2f(68, 55);
 	glVertex2f(73, 55);
 	glVertex2f(73, 50);
@@ -203,7 +203,7 @@ void displayMe(void){
 	glEnd();
 
 	glBegin(GL_POLYGON); //kaca tengah kanan
-	glColor3f(0.5f,1.0f,1.0f);
+	glColor3f(0.4, 0.6, 1);
 	glVertex2f(80, 55);
 	glVertex2f(85, 55);
 	glVertex2f(85, 50);
@@ -227,7 +227,7 @@ void displayMe(void){
 	glEnd();
 
 	glBegin(GL_POLYGON); //pintu abu
-	glColor3f(0.1f, 0.1f, 0.1f);
+	glColor3f(0.2, 0.2, 0.2);
 	glVertex2f(70, 45);
 	glVertex2f(82, 45);
 	glVertex2f(82, 30);
@@ -235,7 +235,7 @@ void displayMe(void){
 	glEnd();
 
 	glBegin(GL_POLYGON); //atap kanan
-	glColor3f(0.1f,0.0f,0.0f);
+	glColor3f(0.4, 0.2, 0.2);
 	glVertex2f(90, 65);
 	glVertex2f(106, 65);
 	glVertex2f(106, 60);
@@ -251,7 +251,7 @@ void displayMe(void){
 	glEnd();
 
 	glBegin(GL_POLYGON); //kaca kanan atas
-	glColor3f(0.5f,1.0f,1.0f);
+	glColor3f(0.4, 0.6, 1);
 	glVertex2f(93, 57);
 	glVertex2f(98, 57);
 	glVertex2f(98, 51);
@@ -259,7 +259,7 @@ void displayMe(void){
 	glEnd();
 
 	glBegin(GL_POLYGON); //kaca kanan bawah
-	glColor3f(0.5f,1.0f,1.0f);
+	glColor3f(0.4, 0.6, 1);
 	glVertex2f(93, 47);
 	glVertex2f(98, 47);
 	glVertex2f(98, 41);
