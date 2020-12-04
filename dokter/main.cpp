@@ -4,6 +4,8 @@
 void displayMe(void){
     glClear(GL_COLOR_BUFFER_BIT);
 
+
+    glLineWidth(70);
     glBegin(GL_POLYGON); //APD luar
 	glColor3f(0.8f, 0.8f, 0.9f);
 	glVertex2f(1.66,7.92);//A
@@ -20,11 +22,11 @@ void displayMe(void){
 	glVertex2f(5.72,6.1);//K
 	glVertex2f(5.32,7.04);//J
 	glVertex2f(4.62,7.92);//I
-	glVertex2f(3.12,8.32);//H
+	glVertex2f(3.14,8);//H
 	glEnd();
 
 	glBegin(GL_POLYGON);//Leher
-    glColor3f(0.8f, 0.8f, 0.9f);
+	glColor3f (0.5, 0.5, 0.5);
 	glVertex2f(2,2);//G
 	glVertex2f(4,2);//O
 	glVertex2f(6,0);//Z
@@ -40,7 +42,8 @@ void displayMe(void){
 	glEnd();
 
 	glBegin(GL_POLYGON);//Masker
-	glColor3f(0.8f, 0.9f, 0.9f);
+	glColor3f(0.0f,1.0f,1.0f);
+	//glColor3f(0.8f, 0.9f, 0.9f);
 	glVertex2f(2.98,4.54);//V
 	glVertex2f(4.9,3.58);//U
 	glVertex2f(4,2);//O
@@ -49,7 +52,7 @@ void displayMe(void){
     glEnd();
 
     glBegin(GL_POLYGON);//Kacamata
-    glColor4f(1.0f, 1.0f, 1.0f, 0.0f);
+    glColor3f(1.0f,0.4f,0.0f);
     glVertex2f(2.98,4.54);//V
     glVertex2f(4.9,3.58);//U
     glVertex2f(4.84,5.9);//T
@@ -84,7 +87,7 @@ void displayMe(void){
     glVertex2f(0.42,6.12);//C
     glVertex2f(0.84,7.04);//B
     glVertex2f(1.66,7.92);//A
-	glVertex2f(3.12,8.32);//H
+	glVertex2f(3.14,8);//H
 	glVertex2f(4.62,7.92);//I
 	glVertex2f(5.32,7.04);//J
 	glVertex2f(5.72,6.1);//K
@@ -96,6 +99,7 @@ void displayMe(void){
 	glVertex2f(0,0);//W
 	glEnd();
 
+
 	glBegin(GL_LINE_LOOP);//Outline Masker
     glColor3f(0.2f, 0.3f, 0.4f);
 	glVertex2f(2.98,4.54);//V
@@ -104,6 +108,34 @@ void displayMe(void){
 	glVertex2f(2,2);//G
 	glVertex2f(1.12,3.64);//P
 	glEnd();
+
+	glPointSize(10);//mata luar
+    glBegin(GL_POINTS);
+    glColor3f (0.0, 0.0, 0.0);
+    glVertex2f(2.18,5.02);
+    glVertex2f(4,5);
+    glEnd();
+
+    glPointSize(3);//bayangan mata
+    glBegin(GL_POINTS);
+    glColor4f(1.0f, 1.0f, 1.0f, 0.0f);
+    glVertex2f(2.08,5.22);
+    glVertex2f(3.88,5.18);
+    glEnd();
+
+    glLineWidth(03);//strip bayangan masker atas
+    glBegin(GL_LINES);
+    glColor4f(1.0f, 1.0f, 1.0f, 0.0f);
+    glVertex2f(2.02,3.5);
+    glVertex2f(3.88,3.5);
+    glEnd();
+
+    glLineWidth(03);//strip bayangan masker bawah
+    glBegin(GL_LINES);
+    glColor4f(1.0f, 1.0f, 1.0f, 0.0f);
+    glVertex2f(2.42,2.92);
+    glVertex2f(3.64,2.92);
+    glEnd();
 
 	glutSwapBuffers();
 }
