@@ -10,7 +10,7 @@
 	<stddef.h>
 	<GL/gl.h>
 
-976692172 c:\program files (x86)\codeblocks\mingw\include\gl\glut.h
+881786480 c:\program files (x86)\codeblocks\mingw\include\gl\glut.h
 	<windows.h>
 	<GL/gl.h>
 	<GL/glu.h>
@@ -220,6 +220,11 @@
 	<objfwd.h>
 
 1607081288 source:c:\users\core-i3\downloads\grafika komputer\dokter\main.cpp
+	<GL/gl.h>
+	<GL/glu.h>
+	<GL/glut.h>
+
+1607140248 source:d:\itb\sem 3\new folder (2)\project mabok grafkom\mabokgrafkom\dokter\main.cpp
 	<GL/gl.h>
 	<GL/glu.h>
 	<GL/glut.h>

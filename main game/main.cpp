@@ -16,20 +16,23 @@ using namespace std;
 
 int horizontal=0;
 int vertikalObat=45;
-float posisiObat[4]={20,25,40,47};
-int colliderWindowRight=78;
-int colliderWindowLeft=5;
+float posisiObat[4]={20,25,38,45};
+int colliderWindowRight=85;
+int colliderWindowLeft=0;
 int colliderWindowTop=45;
 int colliderWindowBottom=0;
-float posisiDokter[4]={0,8,0,7};
-float posisiVirus[4]={65,70,40,45};
-int vertikalVirus=45;
+float colliderDokter[4]={0,8,0,7};
+
+float colliderVirus[4]={50,55,40,45};
+float gerakVirus[2]={50,40}; //horixontal, vertikal
+bool horVirus=true; //true kalo gerak ke kanan
+bool verVirus=false; // true kalo gerak keatas
 
 char MENU[1000];
 void cek(){
-    cout << "posisiKanan: " << posisiDokter[1] << "\n";
+    cout << "posisiKanan: " << colliderDokter[1] << "\n";
     cout << "WindowRight: " << colliderWindowRight<< "\n";
-    cout << "posisiKiri: " << posisiDokter[0] << "\n";
+    cout << "posisiKiri: " << colliderDokter[0] << "\n";
     cout << "WindowLeft: " << colliderWindowLeft<< "\n";
     cout << "Translasi: " << horizontal<< "\n";
 
@@ -59,132 +62,176 @@ void menu(){
 void gerakDokter(int key, int x, int y){
     cek();
     if(GetAsyncKeyState(VK_RIGHT)){
-        if (posisiDokter[1]<=colliderWindowRight){
-            horizontal+=10;
-            posisiDokter[1]+=10;
-            posisiDokter[0]+=10;
+        if (colliderDokter[1]<=colliderWindowRight){
+            horizontal+=3;
+            colliderDokter[1]+=3;
+            colliderDokter[0]+=3;
             glutPostRedisplay();
         }
     }
     if (GetAsyncKeyState(VK_LEFT)){
-        if (posisiDokter[0]>=colliderWindowLeft){
-            horizontal-=10;
-            posisiDokter[1]-=10;
-            posisiDokter[0]-=10;
+        if (colliderDokter[0]>=colliderWindowLeft){
+            horizontal-=3;
+            colliderDokter[1]-=3;
+            colliderDokter[0]-=3;
             glutPostRedisplay();
         }
     }
 
 }
-void colliderDokter(){
-    glBegin(GL_POLYGON);
-    glVertex2f(posisiDokter[0],posisiDokter[3]);
-    glVertex2f(posisiDokter[0],posisiDokter[4]);
-    glVertex2f(posisiDokter[1],posisiDokter[4]);
-    glVertex2f(posisiDokter[1],posisiDokter[3]);
-    glEnd();
-}
+//void colliderDokter(){
+    //glBegin(GL_POLYGON);
+    //glVertex2f(posisiDokter[0],posisiDokter[3]);
+    //glVertex2f(posisiDokter[0],posisiDokter[4]);
+    //glVertex2f(posisiDokter[1],posisiDokter[4]);
+    //glVertex2f(posisiDokter[1],posisiDokter[3]);
+    //g/lEnd();}
+
 void dokterObject(){
+    glPushMatrix();
+    glLineWidth(5);
     glBegin(GL_POLYGON); //APD luar
 	glColor3f(0.8f, 0.8f, 0.9f);
-	glVertex2f(1.66,7.92);//A
-	glVertex2f(0.84,7.04);//B
-	glVertex2f(0.42,6.12);//C
-	glVertex2f(0.4,4.94);//D
-	glVertex2f(0.44,3.8);//E
-	glVertex2f(1.04,2.82);//F
-	glVertex2f(2,2);//G
-	glVertex2f(4,2);//O
-	glVertex2f(4.84,2.8);//N
-	glVertex2f(5.64,3.84);//M
-	glVertex2f(5.72,4.98);//L
-	glVertex2f(5.72,6.1);//K
-	glVertex2f(5.32,7.04);//J
-	glVertex2f(4.62,7.92);//I
-	glVertex2f(3.12,8.32);//H
+	glVertex2f(1.86,9.83);//A
+	glVertex2f(1.04,8.95);//B
+	glVertex2f(0.62,8.03);//C
+	glVertex2f(0.6,6.85);//D
+	glVertex2f(0.64,5.71);//E
+	glVertex2f(1.24,4.73);//F
+	glVertex2f(2.2,3.91);//G
+	glVertex2f(4.2,3.91);//O
+	glVertex2f(5.04,4.71);//N
+	glVertex2f(5.84,5.75);//M
+	glVertex2f(5.92,6.89);//L
+	glVertex2f(5.92,8.01);//K
+	glVertex2f(5.52,8.95);//J
+	glVertex2f(4.82,9.83);//I
+	glVertex2f(3.34,9.91);//H
 	glEnd();
 
 	glBegin(GL_POLYGON);//Leher
-    glColor3f(0.8f, 0.8f, 0.9f);
-	glVertex2f(2,2);//G
-	glVertex2f(4,2);//O
-	glVertex2f(6,0);//Z
-	glVertex2f(0,0);//W
+	glColor3f (0.5, 0.5, 0.5);
+	glVertex2f(2.2,3.91);//G
+	glVertex2f(4.2,3.91);//O
+	glVertex2f(6.2,1.91);//Z
+	glVertex2f(6.3068, 0);//J1
+	glVertex2f(0, 0);//I1
+	glVertex2f(0.2,1.91);//W
 	glEnd();
 
     glBegin(GL_POLYGON);//atas kacamata
     glColor4f(1.0f, 1.0f, 0.0f, 0.0f);
-	glVertex2f(2.14,7);//R
-	glVertex2f(4,7);//S
-	glVertex2f(4.84,5.9);//T
-	glVertex2f(1.16,5.92);//Q
+	glVertex2f(2.34,8.91);//R
+	glVertex2f(4.2,8.91);//S
+	glVertex2f(5.04,7.81);//T
+	glVertex2f(1.36,7.83);//Q
 	glEnd();
 
 	glBegin(GL_POLYGON);//Masker
-	glColor3f(0.8f, 0.9f, 0.9f);
-	glVertex2f(2.98,4.54);//V
-	glVertex2f(4.9,3.58);//U
-	glVertex2f(4,2);//O
-	glVertex2f(2,2);//G
-	glVertex2f(1.12,3.64);//P
+	glColor3f(0.0f,1.0f,1.0f);
+	glVertex2f(3.18,6.45);//V
+	glVertex2f(5.1,5.49);//U
+	glVertex2f(4.2,3.91);//O
+	glVertex2f(2.2,3.91);//G
+	glVertex2f(1.32,5.55);//P
     glEnd();
 
     glBegin(GL_POLYGON);//Kacamata
-    glColor4f(1.0f, 1.0f, 1.0f, 0.0f);
-    glVertex2f(2.98,4.54);//V
-    glVertex2f(4.9,3.58);//U
-    glVertex2f(4.84,5.9);//T
-    glVertex2f(1.16,5.92);//Q
-    glVertex2f(1.12,3.64);//P
+    glColor3f(1.0f,0.4f,0.0f);
+    glVertex2f(3.18,6.45);//V
+    glVertex2f(5.1,5.49);//U
+    glVertex2f(5.04,7.81);//T
+    glVertex2f(1.36,7.83);//Q
+    glVertex2f(1.32,5.55);//P
 	glEnd();
 
 	glBegin(GL_LINE_LOOP);//Outline Kacamata
     glColor3f(0.2f, 0.3f, 0.4f);
-    glVertex2f(2.98,4.54);//V
-    glVertex2f(4.9,3.58);//U
-    glVertex2f(4.84,5.9);//T
-    glVertex2f(1.16,5.92);//Q
-    glVertex2f(1.12,3.64);//P
+    glVertex2f(3.18,6.45);//V
+    glVertex2f(5.1,5.49);//U
+    glVertex2f(5.04,7.81);//T
+    glVertex2f(1.36,7.83);//Q
+    glVertex2f(1.32,5.55);//P
 	glEnd();
 
 	glBegin(GL_LINE_LOOP);//Outline Atas Kacamata
     glColor3f(0.2f, 0.3f, 0.4f);
-    glVertex2f(2.14,7);//R
-	glVertex2f(4,7);//S
-	glVertex2f(4.84,5.9);//T
-	glVertex2f(1.16,5.92);//Q
+    glVertex2f(2.34,8.91);//R
+	glVertex2f(4.2,8.91);//S
+	glVertex2f(5.04,7.81);//T
+	glVertex2f(1.36,7.83);//Q
 	glEnd();
 
 	glBegin(GL_LINE_LOOP);//Outline APD + Leher
     glColor3f(0.2f, 0.3f, 0.4f);
-    glVertex2f(0,0);//W
-    glVertex2f(2,2);//G
-    glVertex2f(1.04,2.82);//F
-    glVertex2f(0.44,3.8);//E
-    glVertex2f(0.4,4.94);//D
-    glVertex2f(0.42,6.12);//C
-    glVertex2f(0.84,7.04);//B
-    glVertex2f(1.66,7.92);//A
-	glVertex2f(3.12,8.32);//H
-	glVertex2f(4.62,7.92);//I
-	glVertex2f(5.32,7.04);//J
-	glVertex2f(5.72,6.1);//K
-	glVertex2f(5.72,4.98);//L
-	glVertex2f(5.64,3.84);//M
-	glVertex2f(4.84,2.8);//N
-	glVertex2f(4,2);//O
-	glVertex2f(6,0);//Z
-	glVertex2f(0,0);//W
+    glVertex2f(0.2,1.91);//W
+    glVertex2f(2.2,3.91);//G
+    glVertex2f(1.24,4.73);//F
+    glVertex2f(0.64,5.71);//E
+    glVertex2f(0.6,6.85);//D
+    glVertex2f(0.62,8.03);//C
+    glVertex2f(1.04,8.95);//B
+    glVertex2f(1.86,9.83);//A
+	glVertex2f(3.34,9.91);//H
+	glVertex2f(4.82,9.83);//I
+	glVertex2f(5.52,8.95);//J
+	glVertex2f(5.92,8.01);//K
+	glVertex2f(5.92,6.89);//L
+	glVertex2f(5.84,5.75);//M
+	glVertex2f(5.04,4.71);//N
+	glVertex2f(4.2,3.91);//O
+	glVertex2f(6.2,1.91);//Z
+	glVertex2f(6.3068, 0);//J1
+	glVertex2f(0, 0);//I1
+	glVertex2f(0.2,1.91);//W
 	glEnd();
+
 
 	glBegin(GL_LINE_LOOP);//Outline Masker
     glColor3f(0.2f, 0.3f, 0.4f);
-	glVertex2f(2.98,4.54);//V
-	glVertex2f(4.9,3.58);//U
-	glVertex2f(4,2);//O
-	glVertex2f(2,2);//G
-	glVertex2f(1.12,3.64);//P
+	glVertex2f(3.18,6.45);//V
+	glVertex2f(5.1,5.49);//U
+	glVertex2f(4.2,3.91);//O
+	glVertex2f(2.2,3.91);//G
+	glVertex2f(1.32,5.55);//P
 	glEnd();
+
+	glPointSize(10);//mata luar
+    glBegin(GL_POINTS);
+    glColor3f (0.0, 0.0, 0.0);
+    glVertex2f(2.38,6.93);//A1
+    glVertex2f(4.2,6.91);//B1
+    glEnd();
+
+    glPointSize(3);//bayangan mata
+    glBegin(GL_POINTS);
+    glColor4f(1.0f, 1.0f, 1.0f, 0.0f);
+    glVertex2f(2.28,7.13);//C1
+    glVertex2f(4.08,7.09);//D1
+    glEnd();
+
+    glLineWidth(03);//strip bayangan masker atas
+    glBegin(GL_LINES);
+    glColor4f(1.0f, 1.0f, 1.0f, 0.0f);
+    glVertex2f(2.22,5.41);//E1
+    glVertex2f(4.08,5.41);//F1
+    glEnd();
+
+    glLineWidth(03);//strip bayangan masker bawah
+    glBegin(GL_LINES);
+    glColor4f(1.0f, 1.0f, 1.0f, 0.0f);
+    glVertex2f(2.62,4.83);//G1
+    glVertex2f(3.84,4.83);//H1
+    glEnd();
+
+    glLineWidth(03);//strip resleting
+    glBegin(GL_LINES);
+    glColor4f(1.0f, 1.0f, 1.0f, 0.0f);
+    glVertex2f(3.1608,3.91);//K1
+    glVertex2f(3.1608,0);//L1
+    glEnd();
+    glPopMatrix();
+	glutSwapBuffers();
 }
 
 void dokterMove(){
@@ -278,7 +325,7 @@ void timerObat(int){
 
 void garisLuar(){
     glPushMatrix();
-    glLineWidth(15);
+    glLineWidth(5);
     glBegin(GL_LINE_LOOP);
     glColor3f(0, 0, 0);
     glVertex2f(2.5, 4.8);
@@ -336,7 +383,7 @@ void garisLuar(){
 
 	glScaled(-1,1,0);
     glTranslated(-5,0,0);
-    glLineWidth(15);
+    glLineWidth(5);
     glBegin(GL_LINE_LOOP);
     glColor3f(0, 0, 0);
     glVertex2f(2.5, 4.8);
@@ -575,39 +622,39 @@ void warnaVirus(){
 
 void virusObject(){
     glPushMatrix();
-    glTranslated(30,30,0);
-    //warnaVirus();
-    //garisLuar();
+    glTranslated(gerakVirus[0],gerakVirus[1],0); //translated menurut posisi
+    warnaVirus();
+    garisLuar();
 
-    //glLineWidth(19);
-    //glBegin(GL_LINES);
-    //glColor3f(0.718, 0.11, 0.11);
-    //glVertex2f(2.51, 4.75);
-    //glVertex2f(2.5, 0.32); //
-    //glEnd();
+    glLineWidth(6);
+    glBegin(GL_LINES);
+    glColor3f(0.718, 0.11, 0.11);
+    glVertex2f(2.51, 4.75);
+    glVertex2f(2.5, 0.32); //
+    glEnd();
 
-    //glLineWidth(60);
-    //glBegin(GL_LINES);
-    //glColor3f(0,0,0);
-    //glVertex2f(2.5, 3.5);
-    //glVertex2f(2.5, 2.2); //
+    glLineWidth(9);
+    glBegin(GL_LINES);
+    glColor3f(0,0,0);
+    glVertex2f(2.5, 3.5);
+    glVertex2f(2.5, 2.2); //
 
-    //glVertex2f(2.5, 1.9);
-    //glVertex2f(2.5, 1.6);
-    //glEnd();
+    glVertex2f(2.5, 1.9);
+    glVertex2f(2.5, 1.6);
+    glEnd();
 
-    //glLineWidth(50);
-    //glBegin(GL_LINES);
-    //glColor3f(0.827, 0.184, 0.184);
-    //glVertex2f(3.07,3.47);
-    //glVertex2f(3.07,3);
+    glLineWidth(8);
+    glBegin(GL_LINES);
+    glColor3f(0.827, 0.184, 0.184);
+    glVertex2f(3.07,3.47);
+    glVertex2f(3.07,3);
 
-    //glVertex2f(3.34,3.11);
-    //glVertex2f(3.34,2.0);
+    glVertex2f(3.34,3.11);
+    glVertex2f(3.34,2.0);
 
-    //glVertex2f(3.58,2.71);
-    //glVertex2f(3.58,2.39);
-    //glEnd();
+    glVertex2f(3.58,2.71);
+    glVertex2f(3.58,2.39);
+    glEnd();
 
     glPopMatrix();
 }
@@ -616,15 +663,59 @@ void timerVirus(int){
     virusObject();
     glutPostRedisplay();
     glutTimerFunc(1000/30,timerVirus,0);
-    if (posisiVirus[3]>=-0){
-        posisiVirus[2]-=0.5;
-        posisiVirus[3]-=0.5;
-        vertikalVirus-=1;
+    if (colliderVirus[1]<=85 && !verVirus && horVirus){
+        colliderVirus[2]-=0.5;
+        colliderVirus[3]-=0.5;
+        colliderVirus[0]+=0.5;
+        colliderVirus[1]+=0.5;
+
+        gerakVirus[0]+=0.5;
+        gerakVirus[1]-=0.5;
     }
     else{
-        posisiVirus[2]=40;
-        posisiVirus[3]=47;
-        vertikalVirus=45;
+        horVirus=false;
+        //colliderVirus[2]=40;
+        //colliderVirus[3]=47;
+    }
+    if (colliderVirus[3]>=0 && !verVirus && !horVirus){
+        colliderVirus[2]-=0.5;
+        colliderVirus[3]-=0.5;
+
+        colliderVirus[0]-=0.5;
+        colliderVirus[1]-=0.5;
+
+        gerakVirus[0]-=0.5;
+        gerakVirus[1]-=0.5;
+    }
+    else{
+        verVirus=true;}
+
+    if (colliderVirus[3]>=0 && verVirus  && !horVirus){
+        colliderVirus[2]+=0.5;
+        colliderVirus[3]+=0.5;
+
+        colliderVirus[0]-=0.5;
+        colliderVirus[1]-=0.5;
+
+        gerakVirus[0]-=0.5;
+        gerakVirus[1]+=0.5;
+    }
+    else{
+        horVirus=true;
+    }
+
+    if (colliderVirus[2]<=42 && verVirus  && horVirus){
+        colliderVirus[2]+=0.5;
+        colliderVirus[3]+=0.5;
+
+        colliderVirus[0]+=0.5;
+        colliderVirus[1]+=0.5;
+
+        gerakVirus[0]+=0.5;
+        gerakVirus[1]+=0.5;
+    }
+    else{
+        verVirus=false;
     }
 
 }
@@ -928,10 +1019,10 @@ int main(int argc, char** argv){
 	glutCreateWindow("Hello world!");
 	glutSpecialFunc(gerakDokter);
 	glutTimerFunc(0,timerObat,0);
-    //glutTimerFunc(0,timerVirus,0);
+    glutTimerFunc(0,timerVirus,0);
 	glutDisplayFunc(displayMe);
 
-	gluOrtho2D(0, 85, 0, 45);
+	gluOrtho2D(-50, 100, -50, 50); //85,45
 	glutMainLoop();
 	return 0;
 }
