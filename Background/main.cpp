@@ -155,7 +155,7 @@ void displayMe(void){
 	glEnd();
 
 	glBegin(GL_POLYGON); //badan kecil kiri
-	glColor4f(1.0f,1.0f,1.0f,0.0f);
+	glColor3f(0.757, 0.757, 0.757);
 	glVertex2f(63, 60);
 	glVertex2f(49, 60);
 	glVertex2f(49, 36);
@@ -187,7 +187,7 @@ void displayMe(void){
 	glEnd();
 
 	glBegin(GL_POLYGON); //badan tengah
-	glColor4f(1.0f,1.0f,1.0f,0.0f);
+	glColor3f(0.902, 0.902, 0.902);
 	glVertex2f(63, 76);
 	glVertex2f(63, 30);
 	glVertex2f(90, 30);
@@ -243,7 +243,7 @@ void displayMe(void){
 	glEnd();
 
 	glBegin(GL_POLYGON); //badan kanan
-	glColor4f(1.0f,1.0f,1.0f,0.0f);
+	glColor3f(0.655, 0.655, 0.655);
 	glVertex2f(90, 60);
 	glVertex2f(105, 60);
 	glVertex2f(105, 36);
