@@ -23,10 +23,11 @@ int colliderWindowTop=45;
 int colliderWindowBottom=0;
 float colliderDokter[4]={0,8,0,7};
 
-float colliderVirus[4]={50,55,40,45};
-float gerakVirus[2]={50,40}; //horixontal, vertikal
+float colliderVirus[4]={60,65,40,45};
+float gerakVirus[2]={60,40}; //horixontal, vertikal
 bool horVirus=true; //true kalo gerak ke kanan
 bool verVirus=false; // true kalo gerak keatas
+float kecepatanVirus=0.5;
 
 char MENU[1000];
 void cek(){
@@ -660,65 +661,68 @@ void virusObject(){
 }
 
 void timerVirus(int){
+    cout << "status horizontal: " << horVirus << "\n";
+    cout << "status vertikal: " << verVirus << "\n";
+    cout << "colliderBawah: " << colliderVirus[3] << "\n";
+    cout << "colliderKiri: " << colliderDokter[0] << "\n";
+    cout << "colliderAtas: " << colliderDokter[2] << "\n";
+    cout << "collider kanan: " << colliderDokter[1] << "\n";
     virusObject();
     glutPostRedisplay();
     glutTimerFunc(1000/30,timerVirus,0);
     if (colliderVirus[1]<=85 && !verVirus && horVirus){
-        colliderVirus[2]-=0.5;
-        colliderVirus[3]-=0.5;
-        colliderVirus[0]+=0.5;
-        colliderVirus[1]+=0.5;
+        colliderVirus[2]-=kecepatanVirus;
+        colliderVirus[3]-=kecepatanVirus;
+        colliderVirus[0]+=kecepatanVirus;
+        colliderVirus[1]+=kecepatanVirus;
 
-        gerakVirus[0]+=0.5;
-        gerakVirus[1]-=0.5;
+        gerakVirus[0]+=kecepatanVirus;
+        gerakVirus[1]-=kecepatanVirus;
     }
     else{
         horVirus=false;
-        //colliderVirus[2]=40;
-        //colliderVirus[3]=47;
-    }
-    if (colliderVirus[3]>=0 && !verVirus && !horVirus){
-        colliderVirus[2]-=0.5;
-        colliderVirus[3]-=0.5;
+        if (colliderVirus[3]>=0 && !verVirus && !horVirus){
+            colliderVirus[2]-=kecepatanVirus;
+            colliderVirus[3]-=kecepatanVirus;
 
-        colliderVirus[0]-=0.5;
-        colliderVirus[1]-=0.5;
+            colliderVirus[0]-=kecepatanVirus;
+            colliderVirus[1]-=kecepatanVirus;
 
-        gerakVirus[0]-=0.5;
-        gerakVirus[1]-=0.5;
-    }
-    else{
-        verVirus=true;}
+            gerakVirus[0]-=kecepatanVirus;
+            gerakVirus[1]-=kecepatanVirus;
+            }
+        else{
+            verVirus=true;
+            if (colliderVirus[0]>=0 && verVirus  && !horVirus){
+                colliderVirus[2]+=kecepatanVirus;
+                colliderVirus[3]+=kecepatanVirus;
 
-    if (colliderVirus[3]>=0 && verVirus  && !horVirus){
-        colliderVirus[2]+=0.5;
-        colliderVirus[3]+=0.5;
+                colliderVirus[0]-=kecepatanVirus;
+                colliderVirus[1]-=kecepatanVirus;
 
-        colliderVirus[0]-=0.5;
-        colliderVirus[1]-=0.5;
+                gerakVirus[0]-=kecepatanVirus;
+                gerakVirus[1]+=kecepatanVirus;}
 
-        gerakVirus[0]-=0.5;
-        gerakVirus[1]+=0.5;
-    }
-    else{
-        horVirus=true;
-    }
+            else{
+                horVirus=true;
+                if (colliderVirus[2]<=42 && verVirus  && horVirus){
+                    colliderVirus[2]+=kecepatanVirus;
+                    colliderVirus[3]+=kecepatanVirus;
 
-    if (colliderVirus[2]<=42 && verVirus  && horVirus){
-        colliderVirus[2]+=0.5;
-        colliderVirus[3]+=0.5;
+                    colliderVirus[0]+=kecepatanVirus;
+                    colliderVirus[1]+=kecepatanVirus;
 
-        colliderVirus[0]+=0.5;
-        colliderVirus[1]+=0.5;
-
-        gerakVirus[0]+=0.5;
-        gerakVirus[1]+=0.5;
-    }
-    else{
-        verVirus=false;
-    }
-
+                    gerakVirus[0]+=kecepatanVirus;
+                    gerakVirus[1]+=kecepatanVirus;
+                    }
+                else{
+                    verVirus=false;
+                    }
+                }
+            }
+        }
 }
+
 void backgroundObject(){
     glPushMatrix();
     glScaled(0.57,0.43,0);
