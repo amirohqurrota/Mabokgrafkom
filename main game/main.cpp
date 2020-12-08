@@ -14,6 +14,9 @@ using namespace std;
 #include <stdlib.h>
 #include <fstream>
 
+#include <cstdlib>   // rand and srand
+#include <ctime>
+
 int horizontal=0;
 int vertikalObat=45;
 float posisiObat[4]={20,25,38,45};
@@ -23,11 +26,21 @@ int colliderWindowTop=45;
 int colliderWindowBottom=0;
 float colliderDokter[4]={0,8,0,7};
 
-float colliderVirus[4]={60,65,39,44};
-float gerakVirus[2]={60,40}; //horixontal, vertikal
-bool horVirus=true; //true kalo gerak ke kanan
-bool verVirus=false; // true kalo gerak keatas
+float colliderVirus[4]={50,55,39,44};
+float gerakVirus[2]={50,40}; //horixontal, vertikal
+bool horVirus=false; //true kalo gerak ke kanan
+bool verVirus=true; // true kalo gerak keatas
+int randHorVirus; //random arah 0 true, 1 false
+int randVerVirus;
 float kecepatanVirus=0.5;
+int randPosisi=0;
+int x1;
+int x2;
+int y1;
+int y2;
+
+
+
 
 char MENU[1000];
 void cek(){
@@ -80,13 +93,7 @@ void gerakDokter(int key, int x, int y){
     }
 
 }
-//void colliderDokter(){
-    //glBegin(GL_POLYGON);
-    //glVertex2f(posisiDokter[0],posisiDokter[3]);
-    //glVertex2f(posisiDokter[0],posisiDokter[4]);
-    //glVertex2f(posisiDokter[1],posisiDokter[4]);
-    //glVertex2f(posisiDokter[1],posisiDokter[3]);
-    //g/lEnd();}
+
 
 void dokterObject(){
     glPushMatrix();
@@ -620,9 +627,34 @@ void warnaVirus(){
     glPopMatrix();
 }
 
+void randVirus(){
+    srand (time(0));
+    randPosisi+=1;
+    if (randPosisi==1){
+        int x1=rand() % 85;
+        int x2=x1+5;
+        int y1=rand() % 45;
+        int y2=y1+5;
+        colliderVirus[0]=x1;
+        colliderVirus[1]=x2;
+        colliderVirus[2]=y1;
+        colliderVirus[3]=y2;
+        gerakVirus[0]=x1;
+        gerakVirus[1]=y1;
+        cout << "cekkk " << x1 << "\n";
+        cout << "cekkk " << y1 << "\n";
 
+        verVirus = rand() & 1;
+        horVirus = rand() & 1;
+        }
+}
+
+void makeVirus(){
+
+}
 void virusObject(){
     glPushMatrix();
+
     glTranslated(gerakVirus[0],gerakVirus[1],0); //translated menurut posisi
     warnaVirus();
     garisLuar();
@@ -978,18 +1010,13 @@ void displayMe(void){
     glClear(GL_COLOR_BUFFER_BIT);
 
     backgroundObject();
-    menu();
+    //menu();
 
-    glBegin(GL_POLYGON);
-	glColor3b(0,0,100);
-	glVertex2f(65,45);
-	glVertex2f(70,45);
-	glVertex2f(70,40);
-	glVertex2f(65,40);
-	glEnd();
+    randVirus();
 
     obatObject();
     dokterMove();
+
     virusObject();
     glFlush();
 	glutSwapBuffers();
@@ -1006,6 +1033,7 @@ int main(int argc, char** argv){
 	glutTimerFunc(0,timerObat,0);
     glutTimerFunc(0,timerVirus,0);
 	glutDisplayFunc(displayMe);
+	//glutSpecialFunc(randVirus);
 
 	gluOrtho2D(-50, 100, -50, 50); //85,45
 	glutMainLoop();
