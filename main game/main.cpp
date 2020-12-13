@@ -26,10 +26,10 @@ int colliderWindowTop=45;
 int colliderWindowBottom=0;
 float colliderDokter[4]={0,8,0,7};
 
-float colliderVirus[4]={50,55,39,44};
-float gerakVirus[2]={50,40}; //horixontal, vertikal
-bool horVirus=false; //true kalo gerak ke kanan
-bool verVirus=true; // true kalo gerak keatas
+float colliderVirus1[4]={50,55,39,44};
+float gerakVirus1[2]={50,40}; //horixontal, vertikal
+bool horVirus1=false; //true kalo gerak ke kanan
+bool verVirus1=true; // true kalo gerak keatas
 int randHorVirus; //random arah 0 true, 1 false
 int randVerVirus;
 float kecepatanVirus=0.5;
@@ -331,6 +331,7 @@ void timerObat(int){
 
 }
 
+
 void garisLuar(){
     glPushMatrix();
     glLineWidth(5);
@@ -627,6 +628,7 @@ void warnaVirus(){
     glPopMatrix();
 }
 
+
 void randVirus(){
     srand (time(0));
     randPosisi+=1;
@@ -649,9 +651,7 @@ void randVirus(){
         }
 }
 
-void makeVirus(){
 
-}
 void virusObject(){
     glPushMatrix();
 
@@ -1012,11 +1012,10 @@ void displayMe(void){
     backgroundObject();
     //menu();
 
-    randVirus();
-
-    obatObject();
     dokterMove();
 
+
+    randVirus();
     virusObject();
     glFlush();
 	glutSwapBuffers();

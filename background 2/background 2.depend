@@ -10,7 +10,7 @@
 	<stddef.h>
 	<GL/gl.h>
 
-976692172 c:\program files (x86)\codeblocks\mingw\include\gl\glut.h
+881786480 c:\program files (x86)\codeblocks\mingw\include\gl\glut.h
 	<windows.h>
 	<GL/gl.h>
 	<GL/glu.h>
@@ -218,4 +218,9 @@
 
 1301111156 c:\program files (x86)\codeblocks\mingw\include\oleidl.h
 	<objfwd.h>
+
+1607389290 source:d:\itb\sem 3\new folder (2)\project mabok grafkom\mabokgrafkom\background 2\main.cpp
+	<GL/gl.h>
+	<GL/glu.h>
+	<GL/glut.h>
 
