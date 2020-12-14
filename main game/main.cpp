@@ -318,8 +318,8 @@ void obatObject(){
 void timerObat(int){
     obatObject();
     glutPostRedisplay();
-    glutTimerFunc(1000/30,timerObat,0);
-    if (posisiObat[3]>=-0){
+    glutTimerFunc(1000/10,timerObat,0);
+    if (posisiObat[3]>=0){
         posisiObat[2]-=0.5;
         posisiObat[3]-=0.5;
         vertikalObat-=1;
@@ -631,12 +631,12 @@ void warnaVirus(){
 
 
 void randVirus(){
-    srand (time(0));
+    //srand (time(0));
     randPosisi+=1;
     if (randPosisi==1){
-        int x1=rand() % 85;
+        int x1=rand() % 80;
         int x2=x1+5;
-        int y1=rand() % 45;
+        int y1=rand() % 40;
         int y2=y1+5;
         colliderVirus[0]=x1;
         colliderVirus[1]=x2;
