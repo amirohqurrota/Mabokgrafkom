@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1607847658 source:d:\itb\sem 3\new folder (2)\project mabok grafkom\mabokgrafkom\oop_virus\oop_virus\main.cpp
+1607938961 source:d:\itb\sem 3\new folder (2)\project mabok grafkom\mabokgrafkom\oop_virus\oop_virus\main.cpp
 	<GL/gl.h>
 	<GL/glu.h>
 	<GL/glut.h>
@@ -11,7 +11,7 @@
 	<fstream>
 	<cstdlib>
 	<ctime>
-	"Virus.h"
+	"makeCube.h"
 
 1301111164 c:\program files (x86)\codeblocks\mingw\include\gl\gl.h
 
@@ -233,6 +233,11 @@
 	<stddef.h>
 
 1607841954 d:\itb\sem 3\new folder (2)\project mabok grafkom\mabokgrafkom\oop_virus\oop_virus\virus.h
+	<GL/gl.h>
+	<GL/glu.h>
+	<GL/glut.h>
+
+1607934579 d:\itb\sem 3\new folder (2)\project mabok grafkom\mabokgrafkom\oop_virus\oop_virus\makecube.h
 	<GL/gl.h>
 	<GL/glu.h>
 	<GL/glut.h>

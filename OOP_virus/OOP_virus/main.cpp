@@ -24,9 +24,135 @@ int posisi[4]={0,0,0,0};
 int horizontal;
 int vertikal;
 int jumlahObjek;
-makeCube listt[10];
+makeCube listt[6]={makeCube(),makeCube(),makeCube(),makeCube(),makeCube(),makeCube()};
+int i;
+//makeCube obj1= makeCube();
+bool status=true;
+
 
 //makeCube objek[2];
+
+
+void timerCube(int){
+    //for(int i = 0; i < 2; i++){
+        i=0;
+        cout << "looping ke: " << i << "\n";
+        listt[i].movement();
+       // glutPostRedisplay();
+        //glutTimerFunc(1000/30,timerCube,0);
+        if (listt[i].posisiCube[3]>=0){
+            cout << "if" << "\n";
+            listt[i].posisiCube[2]-=0.5;
+            listt[i].posisiCube[3]-=0.5;
+            listt[i].gerak[1]-=1;
+             //cout << "posisiobjek: " << listt[2].gerak[1] << "\n";
+        }
+        else{
+            cout << "else " << "\n";
+            listt[i].posisiCube[2]=listt[i].awalX;
+            listt[i].posisiCube[3]=listt[i].awalY;
+            listt[i].gerak[1]=0;
+        }
+      glutPostRedisplay();
+      glutTimerFunc(1000/30,timerCube,0);
+    }
+
+void timerCube1(int){
+    //for(int i = 0; i < 2; i++){
+        i=1;
+        cout << "looping ke: " << i << "\n";
+        listt[i].movement();
+       // glutPostRedisplay();
+        //glutTimerFunc(1000/30,timerCube,0);
+        if (listt[i].posisiCube[3]>=0){
+            cout << "if" << "\n";
+            listt[i].posisiCube[2]-=0.5;
+            listt[i].posisiCube[3]-=0.5;
+            listt[i].gerak[1]-=1;
+             //cout << "posisiobjek: " << listt[2].gerak[1] << "\n";
+        }
+        else{
+            cout << "else " << "\n";
+            listt[i].posisiCube[2]=listt[i].awalX;
+            listt[i].posisiCube[3]=listt[i].awalY;
+            listt[i].gerak[1]=0;
+        }
+      glutPostRedisplay();
+      glutTimerFunc(1000/30,timerCube1,0);
+    }
+
+void timerCube2(int){
+    //for(int i = 0; i < 2; i++){
+        i=2;
+        cout << "looping ke: " << i << "\n";
+        listt[i].movement();
+       // glutPostRedisplay();
+        //glutTimerFunc(1000/30,timerCube,0);
+        if (listt[i].posisiCube[3]>=0){
+            cout << "if" << "\n";
+            listt[i].posisiCube[2]-=0.5;
+            listt[i].posisiCube[3]-=0.5;
+            listt[i].gerak[1]-=1;
+             //cout << "posisiobjek: " << listt[2].gerak[1] << "\n";
+        }
+        else{
+            cout << "else " << "\n";
+            listt[i].posisiCube[2]=listt[i].awalX;
+            listt[i].posisiCube[3]=listt[i].awalY;
+            listt[i].gerak[1]=0;
+        }
+      glutPostRedisplay();
+      glutTimerFunc(1000/30,timerCube2,0);
+    }
+
+void timerCube3(int){
+    //for(int i = 0; i < 2; i++){
+        i=3;
+        cout << "looping ke: " << i << "\n";
+        listt[i].movement();
+       // glutPostRedisplay();
+        //glutTimerFunc(1000/30,timerCube,0);
+        if (listt[i].posisiCube[3]>=0){
+            cout << "if" << "\n";
+            listt[i].posisiCube[2]-=0.5;
+            listt[i].posisiCube[3]-=0.5;
+            listt[i].gerak[1]-=1;
+             //cout << "posisiobjek: " << listt[2].gerak[1] << "\n";
+        }
+        else{
+            cout << "else " << "\n";
+            listt[i].posisiCube[2]=listt[i].awalX;
+            listt[i].posisiCube[3]=listt[i].awalY;
+            listt[i].gerak[1]=0;
+        }
+      glutPostRedisplay();
+      glutTimerFunc(1000/30,timerCube3,0);
+    }
+
+void timerCube4(int){
+    //for(int i = 0; i < 2; i++){
+        i=4;
+        cout << "looping ke: " << i << "\n";
+        listt[i].movement();
+       // glutPostRedisplay();
+        //glutTimerFunc(1000/30,timerCube,0);
+        if (listt[i].posisiCube[3]>=0){
+            cout << "if" << "\n";
+            listt[i].posisiCube[2]-=0.5;
+            listt[i].posisiCube[3]-=0.5;
+            listt[i].gerak[1]-=1;
+             //cout << "posisiobjek: " << listt[2].gerak[1] << "\n";
+        }
+        else{
+            cout << "else " << "\n";
+            listt[i].posisiCube[2]=listt[i].awalX;
+            listt[i].posisiCube[3]=listt[i].awalY;
+            listt[i].gerak[1]=0;
+        }
+      glutPostRedisplay();
+      glutTimerFunc(1000/30,timerCube4,0);
+    }
+
 
 
 
@@ -52,29 +178,23 @@ void makeMoreCube(int sumOfCubes){
             }
 }
 
-void timerCube(){
-    //listt[2].movement();
-    glutPostRedisplay();
-    glutTimerFunc(1000/30,timerCube,0);
-    if (listt[2].posisiCube[2]>=-0){
-        listt[2].posisiCube[2]-=0.5;
-        listt[2].posisiCube[2]-=0.5;
-        listt[2].awalY-=0.5;
-    }
-    else{
-        listt[2].posisiCube[2]=40;
-        listt[2].posisiCube[2]=45;
-        listt[2].awalY=40;
-    }
-
-}
-
 void displayMe(void){
     glClear(GL_COLOR_BUFFER_BIT);
+    bool status=false;
+    //makeCube obj1= makeCube();
+
+    //listt[0]=makeCube();
+    //obj1.gerak[0]=-20;
+     for(int i = 0; i < 6 ; i++){
+         listt[i].movement();
+         cout << "posisiobjek x : " << listt[i].posisiCube[0] << "\n";
+    }
 
 
-    //list
-    listt[2]=makeCube();
+    //listt[0].movement();
+
+   // listt[1]=makeCube();
+
 
     //makeMoreCube (3);
    // makeCube objek=makeCube(0,10);
@@ -83,8 +203,9 @@ void displayMe(void){
     //makeCube objek3=makeCube(30,30);
 
     //+objek2.movement(5,25);
-    cout << "posisiobjek: " << listt[1].awalX << "\n";
-    //cout << "posisiobjek 1 : " << objek.awalX << "\n";
+
+    cout << "posisiobjek x : " << listt[2].posisiCube[0] << "\n";
+    cout << "posisiobjek y : " << listt[2].posisiCube[1] << "\n";
 	glutSwapBuffers();
 }
 
@@ -95,8 +216,12 @@ int main(int argc, char** argv){
 	glutInitWindowPosition(0,0);
 	glutCreateWindow("Hello world!");
 	glutTimerFunc(0,timerCube,0);
+	glutTimerFunc(0,timerCube1,0);
+	glutTimerFunc(0,timerCube2,0);
+	glutTimerFunc(0,timerCube3,0);
+	glutTimerFunc(0,timerCube4,0);
 	glutDisplayFunc(displayMe);
-	gluOrtho2D(0,40,0,40);
+	gluOrtho2D(-40,40,-40,40);
 	glutMainLoop();
 	return 0;
 }
