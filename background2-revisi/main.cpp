@@ -1,9 +1,8 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
-void displayMe(void){
-    glClear(GL_COLOR_BUFFER_BIT);
 
+void background(){
     glBegin(GL_POLYGON); //langit
 	glColor3f(0.639, 0.2, 1);
 	glVertex2f(85, 15.2);
@@ -230,6 +229,18 @@ void displayMe(void){
     glVertex2f(20.1,24.57);
     glVertex2f(19.88,24.57);
     glEnd();
+}
+
+void score(){
+    //codingane taruh siniii
+
+}
+
+void displayMe(void){
+    glClear(GL_COLOR_BUFFER_BIT);
+    background();
+    score();
+
 
 	glutSwapBuffers();
 }

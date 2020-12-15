@@ -15,7 +15,6 @@ class Virus{
     int randHorVirus; //random arah 0 true, 1 false
     int randVerVirus;
     float kecepatanVirus=0.5;
-    int randPosisi=0;
 
     void garisLuar(){
     glPushMatrix();
@@ -360,7 +359,6 @@ class Virus{
             //makeCube::awalY=inputany1;
         //}
          //if (status){
-        cout << "construtor" << "\n";
         //float gerak[2]={0,0};
         //makeCube::awalX=30;
        // makeCube::awalY=30;
@@ -380,10 +378,7 @@ class Virus{
         glPushMatrix();
         cout << "movemetn" << Virus::gerakVirus[1]<< "\n";
         glTranslated(Virus::gerakVirus[0],Virus::gerakVirus[1],0);
-        //glTranslated(x,y,0);
         Virus::virusObject();
-        //makeCube::awalX=horizontal
-
         glPopMatrix();
     }
 };

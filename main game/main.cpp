@@ -47,7 +47,7 @@ void cek(){
 
 
 }
-void drawText(int x, int y, const char *string) {
+void text(int x, int y, const char *string) {
 	glRasterPos2f(x, y);
 	int len = (int)strlen(string);
 	for (int i = 0; i < len; i++) {
@@ -64,7 +64,7 @@ void menu(){
 	glVertex2f(35,10);
 	glEnd();
     glColor3b(100,0,0);
-    drawText(42,33,"MENU :");
+    text(42,33,"MENU :");
 
     glPopMatrix();
 }
@@ -798,6 +798,8 @@ void timerVirus9(int){
 
 
 
+void score
+
 
 
 
@@ -1149,7 +1151,7 @@ int main(int argc, char** argv){
 
 	//glutSpecialFunc(randVirus);
 
-	gluOrtho2D(-50, 100, -50, 50); //85,45
+	gluOrtho2D(0, 85, 0, 45); //85,45
 	glutMainLoop();
 	return 0;
 }
