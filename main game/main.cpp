@@ -16,6 +16,8 @@ using namespace std;
 
 #include <cstdlib>   // rand and srand
 #include <ctime>
+#include "Virus.h"
+
 
 int horizontal=0;
 int vertikalObat=45;
@@ -25,24 +27,17 @@ int colliderWindowLeft=0;
 int colliderWindowTop=45;
 int colliderWindowBottom=0;
 float colliderDokter[4]={0,8,0,7};
+Virus arrayVirus[20];
 
-float colliderVirus[4]={50,55,39,44};
-float gerakVirus[2]={50,40}; //horixontal, vertikal
-bool horVirus=false; //true kalo gerak ke kanan
-bool verVirus=true; // true kalo gerak keatas
-int randHorVirus; //random arah 0 true, 1 false
-int randVerVirus;
-float kecepatanVirus=0.5;
-int randPosisi=0;
-int x1;
-int x2;
-int y1;
-int y2;
+int i;
+bool status=true;
 
 
 
 
-char MENU[1000];
+
+//char MENU[1000];
+
 void cek(){
     cout << "posisiKanan: " << colliderDokter[1] << "\n";
     cout << "WindowRight: " << colliderWindowRight<< "\n";
@@ -56,7 +51,7 @@ void drawText(int x, int y, const char *string) {
 	glRasterPos2f(x, y);
 	int len = (int)strlen(string);
 	for (int i = 0; i < len; i++) {
-		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, string[i]);
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, string[i]);
 	}
 }
 void menu(){
@@ -318,8 +313,8 @@ void obatObject(){
 void timerObat(int){
     obatObject();
     glutPostRedisplay();
-    glutTimerFunc(1000/10,timerObat,0);
-    if (posisiObat[3]>=0){
+    glutTimerFunc(1000/30,timerObat,0);
+    if (posisiObat[3]>=-0){
         posisiObat[2]-=0.5;
         posisiObat[3]-=0.5;
         vertikalObat-=1;
@@ -332,409 +327,508 @@ void timerObat(int){
 
 }
 
-
-void garisLuar(){
-    glPushMatrix();
-    glLineWidth(5);
-    glBegin(GL_LINE_LOOP);
-    glColor3f(0, 0, 0);
-    glVertex2f(2.5, 4.8);
-	glVertex2f(2.8, 4.8);
-	glVertex2f(2.8, 4.45);
-	glVertex2f(2.6, 4.45); //H
-	glVertex2f(2.6, 3.9);  //
-	glVertex2f(2.9, 3.9); // R
-	glVertex2f(2.9,  3.7); //S
-	glVertex2f(3.3, 3.7); // T
-	glVertex2f(3.3, 3.9);
-	glVertex2f(3.5, 3.9); //V
-	glVertex2f(3.5, 4.5);
-	glVertex2f(4.1, 4.5);
-	glVertex2f(4.1, 4.3); //A-1
-	glVertex2f(4.26, 4.3); //
-	glVertex2f(4.26, 3.9); //
-	glVertex2f(3.9, 3.9); //D-1
-	glVertex2f(3.9, 4.1); //
-	glVertex2f(3.7, 4.1); //
-	glVertex2f(3.7, 3.7); //
-	glVertex2f(3.54, 3.7); //
-	glVertex2f(3.54, 3.34); //M-1
-	glVertex2f(3.72, 3.34); //
-	glVertex2f(3.72, 2.97); //
-	glVertex2f(3.9, 2.97); // V-1
-	glVertex2f(3.9, 2.56); // w-1
-	glVertex2f(4.07, 2.56); // z-1
-	glVertex2f(4.07, 2.4); // a-2
-	glVertex2f(4.28, 2.4); // b-2
-	glVertex2f(4.28, 2.20); //c-2
-	glVertex2f(4.66, 2.20); //d-2
-	glVertex2f(4.66, 1.81); //e-2
-	glVertex2f(4.28, 1.81); //
-	glVertex2f(4.28, 2.01); // g-2
-	glVertex2f(4.09, 2.01); // h-2
-	glVertex2f(4.09, 2.20); //i-2
-	glVertex2f(3.90, 2.20); //
-	glVertex2f(3.90, 2.00); // k-2
-	glVertex2f(3.72, 2); // l-2
-	glVertex2f(3.72, 1.61); //
-	glVertex2f(3.53, 1.61); // n-2
-	glVertex2f(3.53, 1.42); // o-2
-	glVertex2f(3.16, 1.42); //
-	glVertex2f(3.16, 1.26); //
-	glVertex2f(2.97, 1.26); // r-2
-	glVertex2f(2.97, 1.04); //
-	glVertex2f(2.60, 1.04); // t-2
-	glVertex2f(2.60, 0.68); // u-2
-	glVertex2f(2.58, 0.68); // u-2
-	glVertex2f(2.74, 0.68); // -2
-	glVertex2f(2.74, 0.28); // w-2
-	glVertex2f(2.49, 0.28); //
-	glEnd();
-
-	glScaled(-1,1,0);
-    glTranslated(-5,0,0);
-    glLineWidth(5);
-    glBegin(GL_LINE_LOOP);
-    glColor3f(0, 0, 0);
-    glVertex2f(2.5, 4.8);
-	glVertex2f(2.8, 4.8);
-	glVertex2f(2.8, 4.45);
-	glVertex2f(2.6, 4.45); //H
-	glVertex2f(2.6, 3.9);  //
-	glVertex2f(2.9, 3.9); // R
-	glVertex2f(2.9,  3.7); //S
-	glVertex2f(3.3, 3.7); // T
-	glVertex2f(3.3, 3.9);
-	glVertex2f(3.5, 3.9); //V
-	glVertex2f(3.5, 4.5);
-	glVertex2f(4.1, 4.5);
-	glVertex2f(4.1, 4.3); //A-1
-	glVertex2f(4.26, 4.3); //
-	glVertex2f(4.26, 3.9); //
-	glVertex2f(3.9, 3.9); //D-1
-	glVertex2f(3.9, 4.1); //
-	glVertex2f(3.7, 4.1); //
-	glVertex2f(3.7, 3.7); //
-	glVertex2f(3.54, 3.7); //
-	glVertex2f(3.54, 3.34); //M-1
-	glVertex2f(3.72, 3.34); //
-	glVertex2f(3.72, 2.97); //
-	glVertex2f(3.9, 2.97); // V-1
-	glVertex2f(3.9, 2.56); // w-1
-	glVertex2f(4.07, 2.56); // z-1
-	glVertex2f(4.07, 2.4); // a-2
-	glVertex2f(4.28, 2.4); // b-2
-	glVertex2f(4.28, 2.20); //c-2
-	glVertex2f(4.66, 2.20); //d-2
-	glVertex2f(4.66, 1.81); //e-2
-	glVertex2f(4.28, 1.81); //
-	glVertex2f(4.28, 2.01); // g-2
-	glVertex2f(4.09, 2.01); // h-2
-	glVertex2f(4.09, 2.20); //i-2
-	glVertex2f(3.90, 2.20); //
-	glVertex2f(3.90, 2.00); // k-2
-	glVertex2f(3.72, 2); // l-2
-	glVertex2f(3.72, 1.61); //
-	glVertex2f(3.53, 1.61); // n-2
-	glVertex2f(3.53, 1.42); // o-2
-	glVertex2f(3.16, 1.42); //
-	glVertex2f(3.16, 1.26); //
-	glVertex2f(2.97, 1.26); // r-2
-	glVertex2f(2.97, 1.04); //
-	glVertex2f(2.60, 1.04); // t-2
-	glVertex2f(2.60, 0.68); // u-2
-	glVertex2f(2.58, 0.68); // u-2
-	glVertex2f(2.74, 0.68); // -2
-	glVertex2f(2.74, 0.28); // w-2
-	glVertex2f(2.49, 0.28); //
-	glEnd();
-	glPopMatrix();
-}
-
-void warnaVirus(){
-    glPushMatrix();
-    glBegin(GL_QUADS);
-    glColor3f(0.718, 0.11, 0.11);
-    glVertex2f(2.49, 4.84);
-	glVertex2f(2.75, 4.84);
-	glVertex2f(2.75, 4.45);
-	glVertex2f(2.49, 4.45); //H
-
-	glVertex2f(2.5, 3.9);  // i
-	glVertex2f(2.9, 3.9); // R
-    glVertex2f(3, 1.0); // R
-	glVertex2f(2.5, 1.0);  // i
-    glEnd();
-
-	glBegin(GL_POLYGON);
-    glVertex2f(2.8, 3.7);  // i
-	glVertex2f(3.54, 3.7); // R
-	//glVertex2f(3.3, 3.7); // V
-    glVertex2f(3.54, 1.43); // R
-    glVertex2f(3.1, 1.31);
-	glVertex2f(2.9, 1.23);  // i
-	//glVertex2f(2.6, 1.2);  // i
-	glEnd();
-
-
-	glBegin(GL_POLYGON);
-	glVertex2f(3.54, 3.35); //  M
-	glVertex2f(3.72, 3.35); // B3
-    glVertex2f(3.72, 2.97); // U1
-    glVertex2f(3.850, 2.97); //V1
-	glVertex2f(3.9, 2.56);  // W1
-	glVertex2f(3.54, 2.56);  // D3
-	glEnd();
-
-    glBegin(GL_POLYGON);
-	glVertex2f(3.54, 2.56);  // D3
-	glVertex2f(4.07,2.57);  // F3-1
-	glVertex2f(4.12,2.38);  // F3
-	glVertex2f(4.27,2.36);  // B2
-	glVertex2f(4.27,2.01);  // G2
-	glVertex2f(4.21,2.01);  // G2-2
-	glVertex2f(3.99,2.2);  //
-    glVertex2f(3.9,2.01);  // G2-2
-	glVertex2f(3.7,2.01);  //
-	glVertex2f(3.7,1.55);  // G3
-	glVertex2f(3.54,1.55);  //
-	glEnd();
-
-	//TANGAN IRUS BAWAH
-    glBegin(GL_POLYGON);
-	glVertex2f(4.27, 2.2);  // B2
-	glVertex2f(4.66, 2.2);  // D2
-	glVertex2f(4.66, 1.82);  // E-2
-	glVertex2f(4.27, 1.82);  //
-	glEnd();
-
-    //TANGAN IRUS atas
-    glBegin(GL_QUADS);
-    glVertex2f(3.20, 3.68);  //t
-    glVertex2f(3.30, 3.9);  //
-    glVertex2f(3.7, 3.9);  // j1
-    glVertex2f(3.7, 3.68);  //
-
-    glVertex2f(3.7, 3.9);  // j1
-    glVertex2f(3.54, 3.9);  //
-    glVertex2f(3.54, 4.46);  //
-    glVertex2f(3.7, 4.46);  //
-
-    glVertex2f(3.7, 4.1);  // j1
-    glVertex2f(3.7, 4.46);  //
-    glVertex2f(4.07, 4.46);  //
-    glVertex2f(4.07, 4.1);  //
-
-    glVertex2f(3.91, 3.94);  // d1
-    glVertex2f(4.28, 3.94);  // c1
-    glVertex2f(4.28, 4.3);  //
-    glVertex2f(3.91, 4.3);  //b1
-    glEnd();
-
-
-	glBegin(GL_POLYGON);
-	glVertex2f(2.58, 0.68); // u-2
-	glVertex2f(2.74, 0.68); // -2
-	glVertex2f(2.74, 0.28); // w-2
-	glVertex2f(2.49, 0.28); //
-	glEnd();
-
-    glScaled(-1,1,0);
-    glTranslated(-5,0,0);
-    glBegin(GL_QUADS);
-    glColor3f(0.718, 0.11, 0.11);
-    glVertex2f(2.49, 4.84);
-	glVertex2f(2.75, 4.84);
-	glVertex2f(2.75, 4.45);
-	glVertex2f(2.49, 4.45); //H
-
-	glVertex2f(2.5, 3.9);  // i
-	glVertex2f(2.9, 3.9); // R
-    glVertex2f(3, 1.0); // R
-	glVertex2f(2.5, 1.0);  // i
-    glEnd();
-
-	glBegin(GL_POLYGON);
-    glVertex2f(2.8, 3.7);  // i
-	glVertex2f(3.54, 3.7); // R
-	//glVertex2f(3.3, 3.7); // V
-    glVertex2f(3.54, 1.43); // R
-    glVertex2f(3.1, 1.31);
-	glVertex2f(2.9, 1.23);  // i
-	//glVertex2f(2.6, 1.2);  // i
-	glEnd();
-
-
-	glBegin(GL_POLYGON);
-	glVertex2f(3.54, 3.35); //  M
-	glVertex2f(3.72, 3.35); // B3
-    glVertex2f(3.72, 2.97); // U1
-    glVertex2f(3.850, 2.97); //V1
-	glVertex2f(3.9, 2.56);  // W1
-	glVertex2f(3.54, 2.56);  // D3
-	glEnd();
-
-    glBegin(GL_POLYGON);
-	glVertex2f(3.54, 2.56);  // D3
-	glVertex2f(4.07,2.57);  // F3-1
-	glVertex2f(4.12,2.38);  // F3
-	glVertex2f(4.27,2.36);  // B2
-	glVertex2f(4.27,2.01);  // G2
-	glVertex2f(4.21,2.01);  // G2-2
-	glVertex2f(3.99,2.2);  //
-    glVertex2f(3.9,2.01);  // G2-2
-	glVertex2f(3.7,2.01);  //
-	glVertex2f(3.7,1.55);  // G3
-	glVertex2f(3.54,1.55);  //
-	glEnd();
-
-	//TANGAN IRUS BAWAH
-    glBegin(GL_POLYGON);
-	glVertex2f(4.27, 2.2);  // B2
-	glVertex2f(4.66, 2.2);  // D2
-	glVertex2f(4.66, 1.82);  // E-2
-	glVertex2f(4.27, 1.82);  //
-	glEnd();
-
-    //TANGAN IRUS atas
-    glBegin(GL_QUADS);
-    glVertex2f(3.20, 3.68);  //t
-    glVertex2f(3.30, 3.9);  //
-    glVertex2f(3.7, 3.9);  // j1
-    glVertex2f(3.7, 3.68);  //
-
-    glVertex2f(3.7, 3.9);  // j1
-    glVertex2f(3.54, 3.9);  //
-    glVertex2f(3.54, 4.46);  //
-    glVertex2f(3.7, 4.46);  //
-
-    glVertex2f(3.7, 4.1);  // j1
-    glVertex2f(3.7, 4.46);  //
-    glVertex2f(4.07, 4.46);  //
-    glVertex2f(4.07, 4.1);  //
-
-    glVertex2f(3.91, 3.94);  // d1
-    glVertex2f(4.28, 3.94);  // c1
-    glVertex2f(4.28, 4.3);  //
-    glVertex2f(3.91, 4.3);  //b1
-    glEnd();
-
-
-	glBegin(GL_POLYGON);
-	glVertex2f(2.58, 0.68); // u-2
-	glVertex2f(2.74, 0.68); // -2
-	glVertex2f(2.74, 0.28); // w-2
-	glVertex2f(2.49, 0.28); //
-	glEnd();
-    glPopMatrix();
-}
-
-
-void randVirus(){
-    //srand (time(0));
-    randPosisi+=1;
-    if (randPosisi==1){
-        int x1=rand() % 80;
-        int x2=x1+5;
-        int y1=rand() % 40;
-        int y2=y1+5;
-        colliderVirus[0]=x1;
-        colliderVirus[1]=x2;
-        colliderVirus[2]=y1;
-        colliderVirus[3]=y2;
-        gerakVirus[0]=x1;
-        gerakVirus[1]=y1;
-        cout << "cekkk " << x1 << "\n";
-        cout << "cekkk " << y1 << "\n";
-
-        verVirus = rand() & 1;
-        horVirus = rand() & 1;
-        }
-}
-
-
-void virusObject(){
-    glPushMatrix();
-
-    glTranslated(gerakVirus[0],gerakVirus[1],0); //translated menurut posisi
-    warnaVirus();
-    garisLuar();
-
-    glLineWidth(6);
-    glBegin(GL_LINES);
-    glColor3f(0.718, 0.11, 0.11);
-    glVertex2f(2.51, 4.75);
-    glVertex2f(2.5, 0.32); //
-    glEnd();
-
-    glLineWidth(9);
-    glBegin(GL_LINES);
-    glColor3f(0,0,0);
-    glVertex2f(2.5, 3.5);
-    glVertex2f(2.5, 2.2); //
-
-    glVertex2f(2.5, 1.9);
-    glVertex2f(2.5, 1.6);
-    glEnd();
-
-    glLineWidth(8);
-    glBegin(GL_LINES);
-    glColor3f(0.827, 0.184, 0.184);
-    glVertex2f(3.07,3.47);
-    glVertex2f(3.07,3);
-
-    glVertex2f(3.34,3.11);
-    glVertex2f(3.34,2.0);
-
-    glVertex2f(3.58,2.71);
-    glVertex2f(3.58,2.39);
-    glEnd();
-
-    glPopMatrix();
-}
-
 void timerVirus(int){
-    virusObject();
+    i=0;
+    arrayVirus[i].movement();
     glutPostRedisplay();
     glutTimerFunc(1000/30,timerVirus,0);
-    if (verVirus){
-        gerakVirus[1]+=kecepatanVirus;
-        colliderVirus[2]+=kecepatanVirus;
-        colliderVirus[3]+=kecepatanVirus;
+    if (arrayVirus[i].verVirus){
+        arrayVirus[i].gerakVirus[1]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[2]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[3]+=arrayVirus[i].kecepatanVirus;
     }
-    if (!verVirus){
-        gerakVirus[1]-=kecepatanVirus;
-        colliderVirus[2]-=kecepatanVirus;
-        colliderVirus[3]-=kecepatanVirus;
+    if (!arrayVirus[i].verVirus){
+        arrayVirus[i].gerakVirus[1]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[2]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[3]-=arrayVirus[i].kecepatanVirus;
     }
-    if (horVirus){
-        gerakVirus[0]+=kecepatanVirus;
-        colliderVirus[0]+=kecepatanVirus;
-        colliderVirus[1]+=kecepatanVirus;
+    if (arrayVirus[i].horVirus){
+        arrayVirus[i].gerakVirus[0]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[0]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[1]+=arrayVirus[i].kecepatanVirus;
     }
-    if (!horVirus){
-        gerakVirus[0]-=kecepatanVirus;
-        colliderVirus[0]-=kecepatanVirus;
-        colliderVirus[1]-=kecepatanVirus;
+    if (!arrayVirus[i].horVirus){
+        arrayVirus[i].gerakVirus[0]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[0]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[1]-=arrayVirus[i].kecepatanVirus;
     }
 
     //sisikanan
-    if (colliderVirus[0]>0 && colliderVirus[1]>=85 && colliderVirus[2]>0 && colliderVirus[3]<45 ){
-        horVirus=!horVirus;
+    if (arrayVirus[i].colliderVirus[0]>0 && arrayVirus[i].colliderVirus[1]>=85 && arrayVirus[i].colliderVirus[2]>0 && arrayVirus[i].colliderVirus[3]<45 ){
+        arrayVirus[i].horVirus=!arrayVirus[i].horVirus;
     }
     //sisiatas
-    else if (colliderVirus[0]>0 && colliderVirus[1]<85 && colliderVirus[2]>0 && colliderVirus[3]>=45){
-        verVirus=!verVirus;
+    else if (arrayVirus[i].colliderVirus[0]>0 && arrayVirus[i].colliderVirus[1]<85 && arrayVirus[i].colliderVirus[2]>0 && arrayVirus[i].colliderVirus[3]>=45){
+        arrayVirus[i].verVirus=!arrayVirus[i].verVirus;
     }
     //sisibawah
-    else if (colliderVirus[0]>0 && colliderVirus[1]<85 && colliderVirus[2]<=0 && colliderVirus[3]<45){
-        verVirus=!verVirus;
+    else if (arrayVirus[i].colliderVirus[0]>0 && arrayVirus[i].colliderVirus[1]<85 && arrayVirus[i].colliderVirus[2]<=0 && arrayVirus[i].colliderVirus[3]<45){
+        arrayVirus[i].verVirus=!arrayVirus[i].verVirus;
     }
+
+
     //sisikiri
 
-    else if (colliderVirus[0]<=0 && colliderVirus[1]<85 && colliderVirus[2]>0 && colliderVirus[3]<45){
-        horVirus=!horVirus;
+    else if (arrayVirus[i].colliderVirus[0]<=0 && arrayVirus[i].colliderVirus[1]<85 && arrayVirus[i].colliderVirus[2]>0 && arrayVirus[i].colliderVirus[3]<45){
+        arrayVirus[i].horVirus=!arrayVirus[i].horVirus;
     }
+}
+void timerVirus1(int){
+    i=1;
+    arrayVirus[i].movement();
+    glutPostRedisplay();
+    glutTimerFunc(1000/30,timerVirus1,0);
+    if (arrayVirus[i].verVirus){
+        arrayVirus[i].gerakVirus[1]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[2]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[3]+=arrayVirus[i].kecepatanVirus;
+    }
+    if (!arrayVirus[i].verVirus){
+        arrayVirus[i].gerakVirus[1]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[2]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[3]-=arrayVirus[i].kecepatanVirus;
+    }
+    if (arrayVirus[i].horVirus){
+        arrayVirus[i].gerakVirus[0]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[0]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[1]+=arrayVirus[i].kecepatanVirus;
+    }
+    if (!arrayVirus[i].horVirus){
+        arrayVirus[i].gerakVirus[0]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[0]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[1]-=arrayVirus[i].kecepatanVirus;
+    }
+
+    //sisikanan
+    if (arrayVirus[i].colliderVirus[0]>0 && arrayVirus[i].colliderVirus[1]>=85 && arrayVirus[i].colliderVirus[2]>0 && arrayVirus[i].colliderVirus[3]<45 ){
+        arrayVirus[i].horVirus=!arrayVirus[i].horVirus;
+    }
+    //sisiatas
+    else if (arrayVirus[i].colliderVirus[0]>0 && arrayVirus[i].colliderVirus[1]<85 && arrayVirus[i].colliderVirus[2]>0 && arrayVirus[i].colliderVirus[3]>=45){
+        arrayVirus[i].verVirus=!arrayVirus[i].verVirus;
+    }
+    //sisibawah
+    else if (arrayVirus[i].colliderVirus[0]>0 && arrayVirus[i].colliderVirus[1]<85 && arrayVirus[i].colliderVirus[2]<=0 && arrayVirus[i].colliderVirus[3]<45){
+        arrayVirus[i].verVirus=!arrayVirus[i].verVirus;
+    }
+
+
+    //sisikiri
+
+    else if (arrayVirus[i].colliderVirus[0]<=0 && arrayVirus[i].colliderVirus[1]<85 && arrayVirus[i].colliderVirus[2]>0 && arrayVirus[i].colliderVirus[3]<45){
+        arrayVirus[i].horVirus=!arrayVirus[i].horVirus;
+    }
+}
+
+void timerVirus2(int){
+    i=2;
+    arrayVirus[i].movement();
+    glutPostRedisplay();
+    glutTimerFunc(1000/30,timerVirus2,0);
+    if (arrayVirus[i].verVirus){
+        arrayVirus[i].gerakVirus[1]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[2]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[3]+=arrayVirus[i].kecepatanVirus;
+    }
+    if (!arrayVirus[i].verVirus){
+        arrayVirus[i].gerakVirus[1]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[2]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[3]-=arrayVirus[i].kecepatanVirus;
+    }
+    if (arrayVirus[i].horVirus){
+        arrayVirus[i].gerakVirus[0]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[0]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[1]+=arrayVirus[i].kecepatanVirus;
+    }
+    if (!arrayVirus[i].horVirus){
+        arrayVirus[i].gerakVirus[0]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[0]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[1]-=arrayVirus[i].kecepatanVirus;
+    }
+
+    //sisikanan
+    if (arrayVirus[i].colliderVirus[0]>0 && arrayVirus[i].colliderVirus[1]>=85 && arrayVirus[i].colliderVirus[2]>0 && arrayVirus[i].colliderVirus[3]<45 ){
+        arrayVirus[i].horVirus=!arrayVirus[i].horVirus;
+    }
+    //sisiatas
+    else if (arrayVirus[i].colliderVirus[0]>0 && arrayVirus[i].colliderVirus[1]<85 && arrayVirus[i].colliderVirus[2]>0 && arrayVirus[i].colliderVirus[3]>=45){
+        arrayVirus[i].verVirus=!arrayVirus[i].verVirus;
+    }
+    //sisibawah
+    else if (arrayVirus[i].colliderVirus[0]>0 && arrayVirus[i].colliderVirus[1]<85 && arrayVirus[i].colliderVirus[2]<=0 && arrayVirus[i].colliderVirus[3]<45){
+        arrayVirus[i].verVirus=!arrayVirus[i].verVirus;
+    }
+
+
+    //sisikiri
+
+    else if (arrayVirus[i].colliderVirus[0]<=0 && arrayVirus[i].colliderVirus[1]<85 && arrayVirus[i].colliderVirus[2]>0 && arrayVirus[i].colliderVirus[3]<45){
+        arrayVirus[i].horVirus=!arrayVirus[i].horVirus;
+    }
+}
+
+void timerVirus3(int){
+    i=3;
+    arrayVirus[i].movement();
+    glutPostRedisplay();
+    glutTimerFunc(1000/30,timerVirus3,0);
+    if (arrayVirus[i].verVirus){
+        arrayVirus[i].gerakVirus[1]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[2]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[3]+=arrayVirus[i].kecepatanVirus;
+    }
+    if (!arrayVirus[i].verVirus){
+        arrayVirus[i].gerakVirus[1]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[2]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[3]-=arrayVirus[i].kecepatanVirus;
+    }
+    if (arrayVirus[i].horVirus){
+        arrayVirus[i].gerakVirus[0]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[0]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[1]+=arrayVirus[i].kecepatanVirus;
+    }
+    if (!arrayVirus[i].horVirus){
+        arrayVirus[i].gerakVirus[0]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[0]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[1]-=arrayVirus[i].kecepatanVirus;
+    }
+
+    //sisikanan
+    if (arrayVirus[i].colliderVirus[0]>0 && arrayVirus[i].colliderVirus[1]>=85 && arrayVirus[i].colliderVirus[2]>0 && arrayVirus[i].colliderVirus[3]<45 ){
+        arrayVirus[i].horVirus=!arrayVirus[i].horVirus;
+    }
+    //sisiatas
+    else if (arrayVirus[i].colliderVirus[0]>0 && arrayVirus[i].colliderVirus[1]<85 && arrayVirus[i].colliderVirus[2]>0 && arrayVirus[i].colliderVirus[3]>=45){
+        arrayVirus[i].verVirus=!arrayVirus[i].verVirus;
+    }
+    //sisibawah
+    else if (arrayVirus[i].colliderVirus[0]>0 && arrayVirus[i].colliderVirus[1]<85 && arrayVirus[i].colliderVirus[2]<=0 && arrayVirus[i].colliderVirus[3]<45){
+        arrayVirus[i].verVirus=!arrayVirus[i].verVirus;
+    }
+
+
+    //sisikiri
+
+    else if (arrayVirus[i].colliderVirus[0]<=0 && arrayVirus[i].colliderVirus[1]<85 && arrayVirus[i].colliderVirus[2]>0 && arrayVirus[i].colliderVirus[3]<45){
+        arrayVirus[i].horVirus=!arrayVirus[i].horVirus;
+    }
+}
+
+void timerVirus4(int){
+    i=4;
+    arrayVirus[i].movement();
+    glutPostRedisplay();
+    glutTimerFunc(1000/30,timerVirus4,0);
+    if (arrayVirus[i].verVirus){
+        arrayVirus[i].gerakVirus[1]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[2]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[3]+=arrayVirus[i].kecepatanVirus;
+    }
+    if (!arrayVirus[i].verVirus){
+        arrayVirus[i].gerakVirus[1]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[2]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[3]-=arrayVirus[i].kecepatanVirus;
+    }
+    if (arrayVirus[i].horVirus){
+        arrayVirus[i].gerakVirus[0]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[0]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[1]+=arrayVirus[i].kecepatanVirus;
+    }
+    if (!arrayVirus[i].horVirus){
+        arrayVirus[i].gerakVirus[0]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[0]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[1]-=arrayVirus[i].kecepatanVirus;
+    }
+
+    //sisikanan
+    if (arrayVirus[i].colliderVirus[0]>0 && arrayVirus[i].colliderVirus[1]>=85 && arrayVirus[i].colliderVirus[2]>0 && arrayVirus[i].colliderVirus[3]<45 ){
+        arrayVirus[i].horVirus=!arrayVirus[i].horVirus;
+    }
+    //sisiatas
+    else if (arrayVirus[i].colliderVirus[0]>0 && arrayVirus[i].colliderVirus[1]<85 && arrayVirus[i].colliderVirus[2]>0 && arrayVirus[i].colliderVirus[3]>=45){
+        arrayVirus[i].verVirus=!arrayVirus[i].verVirus;
+    }
+    //sisibawah
+    else if (arrayVirus[i].colliderVirus[0]>0 && arrayVirus[i].colliderVirus[1]<85 && arrayVirus[i].colliderVirus[2]<=0 && arrayVirus[i].colliderVirus[3]<45){
+        arrayVirus[i].verVirus=!arrayVirus[i].verVirus;
+    }
+
+
+    //sisikiri
+
+    else if (arrayVirus[i].colliderVirus[0]<=0 && arrayVirus[i].colliderVirus[1]<85 && arrayVirus[i].colliderVirus[2]>0 && arrayVirus[i].colliderVirus[3]<45){
+        arrayVirus[i].horVirus=!arrayVirus[i].horVirus;
+    }
+}
+
+void timerVirus5(int){
+    i=5;
+    arrayVirus[i].movement();
+    glutPostRedisplay();
+    glutTimerFunc(1000/30,timerVirus5,0);
+    if (arrayVirus[i].verVirus){
+        arrayVirus[i].gerakVirus[1]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[2]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[3]+=arrayVirus[i].kecepatanVirus;
+    }
+    if (!arrayVirus[i].verVirus){
+        arrayVirus[i].gerakVirus[1]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[2]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[3]-=arrayVirus[i].kecepatanVirus;
+    }
+    if (arrayVirus[i].horVirus){
+        arrayVirus[i].gerakVirus[0]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[0]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[1]+=arrayVirus[i].kecepatanVirus;
+    }
+    if (!arrayVirus[i].horVirus){
+        arrayVirus[i].gerakVirus[0]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[0]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[1]-=arrayVirus[i].kecepatanVirus;
+    }
+
+    //sisikanan
+    if (arrayVirus[i].colliderVirus[0]>0 && arrayVirus[i].colliderVirus[1]>=85 && arrayVirus[i].colliderVirus[2]>0 && arrayVirus[i].colliderVirus[3]<45 ){
+        arrayVirus[i].horVirus=!arrayVirus[i].horVirus;
+    }
+    //sisiatas
+    else if (arrayVirus[i].colliderVirus[0]>0 && arrayVirus[i].colliderVirus[1]<85 && arrayVirus[i].colliderVirus[2]>0 && arrayVirus[i].colliderVirus[3]>=45){
+        arrayVirus[i].verVirus=!arrayVirus[i].verVirus;
+    }
+    //sisibawah
+    else if (arrayVirus[i].colliderVirus[0]>0 && arrayVirus[i].colliderVirus[1]<85 && arrayVirus[i].colliderVirus[2]<=0 && arrayVirus[i].colliderVirus[3]<45){
+        arrayVirus[i].verVirus=!arrayVirus[i].verVirus;
+    }
+
+
+    //sisikiri
+
+    else if (arrayVirus[i].colliderVirus[0]<=0 && arrayVirus[i].colliderVirus[1]<85 && arrayVirus[i].colliderVirus[2]>0 && arrayVirus[i].colliderVirus[3]<45){
+        arrayVirus[i].horVirus=!arrayVirus[i].horVirus;
+    }
+}
+
+void timerVirus6(int){
+    i=6;
+    arrayVirus[i].movement();
+    glutPostRedisplay();
+    glutTimerFunc(1000/30,timerVirus6,0);
+    if (arrayVirus[i].verVirus){
+        arrayVirus[i].gerakVirus[1]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[2]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[3]+=arrayVirus[i].kecepatanVirus;
+    }
+    if (!arrayVirus[i].verVirus){
+        arrayVirus[i].gerakVirus[1]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[2]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[3]-=arrayVirus[i].kecepatanVirus;
+    }
+    if (arrayVirus[i].horVirus){
+        arrayVirus[i].gerakVirus[0]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[0]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[1]+=arrayVirus[i].kecepatanVirus;
+    }
+    if (!arrayVirus[i].horVirus){
+        arrayVirus[i].gerakVirus[0]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[0]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[1]-=arrayVirus[i].kecepatanVirus;
+    }
+
+    //sisikanan
+    if (arrayVirus[i].colliderVirus[0]>0 && arrayVirus[i].colliderVirus[1]>=85 && arrayVirus[i].colliderVirus[2]>0 && arrayVirus[i].colliderVirus[3]<45 ){
+        arrayVirus[i].horVirus=!arrayVirus[i].horVirus;
+    }
+    //sisiatas
+    else if (arrayVirus[i].colliderVirus[0]>0 && arrayVirus[i].colliderVirus[1]<85 && arrayVirus[i].colliderVirus[2]>0 && arrayVirus[i].colliderVirus[3]>=45){
+        arrayVirus[i].verVirus=!arrayVirus[i].verVirus;
+    }
+    //sisibawah
+    else if (arrayVirus[i].colliderVirus[0]>0 && arrayVirus[i].colliderVirus[1]<85 && arrayVirus[i].colliderVirus[2]<=0 && arrayVirus[i].colliderVirus[3]<45){
+        arrayVirus[i].verVirus=!arrayVirus[i].verVirus;
+    }
+
+
+    //sisikiri
+
+    else if (arrayVirus[i].colliderVirus[0]<=0 && arrayVirus[i].colliderVirus[1]<85 && arrayVirus[i].colliderVirus[2]>0 && arrayVirus[i].colliderVirus[3]<45){
+        arrayVirus[i].horVirus=!arrayVirus[i].horVirus;
+    }
+}
+
+void timerVirus7(int){
+    i=7;
+    arrayVirus[i].movement();
+    glutPostRedisplay();
+    glutTimerFunc(1000/30,timerVirus7,0);
+    if (arrayVirus[i].verVirus){
+        arrayVirus[i].gerakVirus[1]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[2]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[3]+=arrayVirus[i].kecepatanVirus;
+    }
+    if (!arrayVirus[i].verVirus){
+        arrayVirus[i].gerakVirus[1]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[2]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[3]-=arrayVirus[i].kecepatanVirus;
+    }
+    if (arrayVirus[i].horVirus){
+        arrayVirus[i].gerakVirus[0]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[0]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[1]+=arrayVirus[i].kecepatanVirus;
+    }
+    if (!arrayVirus[i].horVirus){
+        arrayVirus[i].gerakVirus[0]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[0]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[1]-=arrayVirus[i].kecepatanVirus;
+    }
+
+    //sisikanan
+    if (arrayVirus[i].colliderVirus[0]>0 && arrayVirus[i].colliderVirus[1]>=85 && arrayVirus[i].colliderVirus[2]>0 && arrayVirus[i].colliderVirus[3]<45 ){
+        arrayVirus[i].horVirus=!arrayVirus[i].horVirus;
+    }
+    //sisiatas
+    else if (arrayVirus[i].colliderVirus[0]>0 && arrayVirus[i].colliderVirus[1]<85 && arrayVirus[i].colliderVirus[2]>0 && arrayVirus[i].colliderVirus[3]>=45){
+        arrayVirus[i].verVirus=!arrayVirus[i].verVirus;
+    }
+    //sisibawah
+    else if (arrayVirus[i].colliderVirus[0]>0 && arrayVirus[i].colliderVirus[1]<85 && arrayVirus[i].colliderVirus[2]<=0 && arrayVirus[i].colliderVirus[3]<45){
+        arrayVirus[i].verVirus=!arrayVirus[i].verVirus;
+    }
+
+
+    //sisikiri
+
+    else if (arrayVirus[i].colliderVirus[0]<=0 && arrayVirus[i].colliderVirus[1]<85 && arrayVirus[i].colliderVirus[2]>0 && arrayVirus[i].colliderVirus[3]<45){
+        arrayVirus[i].horVirus=!arrayVirus[i].horVirus;
+    }
+}
+
+void timerVirus8(int){
+    i=8;
+    arrayVirus[i].movement();
+    glutPostRedisplay();
+    glutTimerFunc(1000/30,timerVirus8,0);
+    if (arrayVirus[i].verVirus){
+        arrayVirus[i].gerakVirus[1]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[2]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[3]+=arrayVirus[i].kecepatanVirus;
+    }
+    if (!arrayVirus[i].verVirus){
+        arrayVirus[i].gerakVirus[1]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[2]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[3]-=arrayVirus[i].kecepatanVirus;
+    }
+    if (arrayVirus[i].horVirus){
+        arrayVirus[i].gerakVirus[0]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[0]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[1]+=arrayVirus[i].kecepatanVirus;
+    }
+    if (!arrayVirus[i].horVirus){
+        arrayVirus[i].gerakVirus[0]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[0]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[1]-=arrayVirus[i].kecepatanVirus;
+    }
+
+    //sisikanan
+    if (arrayVirus[i].colliderVirus[0]>0 && arrayVirus[i].colliderVirus[1]>=85 && arrayVirus[i].colliderVirus[2]>0 && arrayVirus[i].colliderVirus[3]<45 ){
+        arrayVirus[i].horVirus=!arrayVirus[i].horVirus;
+    }
+    //sisiatas
+    else if (arrayVirus[i].colliderVirus[0]>0 && arrayVirus[i].colliderVirus[1]<85 && arrayVirus[i].colliderVirus[2]>0 && arrayVirus[i].colliderVirus[3]>=45){
+        arrayVirus[i].verVirus=!arrayVirus[i].verVirus;
+    }
+    //sisibawah
+    else if (arrayVirus[i].colliderVirus[0]>0 && arrayVirus[i].colliderVirus[1]<85 && arrayVirus[i].colliderVirus[2]<=0 && arrayVirus[i].colliderVirus[3]<45){
+        arrayVirus[i].verVirus=!arrayVirus[i].verVirus;
+    }
+
+
+    //sisikiri
+
+    else if (arrayVirus[i].colliderVirus[0]<=0 && arrayVirus[i].colliderVirus[1]<85 && arrayVirus[i].colliderVirus[2]>0 && arrayVirus[i].colliderVirus[3]<45){
+        arrayVirus[i].horVirus=!arrayVirus[i].horVirus;
+    }
+}
+
+void timerVirus9(int){
+    i=9;
+    arrayVirus[i].movement();
+    glutPostRedisplay();
+    glutTimerFunc(1000/30,timerVirus9,0);
+    if (arrayVirus[i].verVirus){
+        arrayVirus[i].gerakVirus[1]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[2]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[3]+=arrayVirus[i].kecepatanVirus;
+    }
+    if (!arrayVirus[i].verVirus){
+        arrayVirus[i].gerakVirus[1]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[2]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[3]-=arrayVirus[i].kecepatanVirus;
+    }
+    if (arrayVirus[i].horVirus){
+        arrayVirus[i].gerakVirus[0]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[0]+=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[1]+=arrayVirus[i].kecepatanVirus;
+    }
+    if (!arrayVirus[i].horVirus){
+        arrayVirus[i].gerakVirus[0]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[0]-=arrayVirus[i].kecepatanVirus;
+        arrayVirus[i].colliderVirus[1]-=arrayVirus[i].kecepatanVirus;
+    }
+
+    //sisikanan
+    if (arrayVirus[i].colliderVirus[0]>0 && arrayVirus[i].colliderVirus[1]>=85 && arrayVirus[i].colliderVirus[2]>0 && arrayVirus[i].colliderVirus[3]<45 ){
+        arrayVirus[i].horVirus=!arrayVirus[i].horVirus;
+    }
+    //sisiatas
+    else if (arrayVirus[i].colliderVirus[0]>0 && arrayVirus[i].colliderVirus[1]<85 && arrayVirus[i].colliderVirus[2]>0 && arrayVirus[i].colliderVirus[3]>=45){
+        arrayVirus[i].verVirus=!arrayVirus[i].verVirus;
+    }
+    //sisibawah
+    else if (arrayVirus[i].colliderVirus[0]>0 && arrayVirus[i].colliderVirus[1]<85 && arrayVirus[i].colliderVirus[2]<=0 && arrayVirus[i].colliderVirus[3]<45){
+        arrayVirus[i].verVirus=!arrayVirus[i].verVirus;
+    }
+
+
+    //sisikiri
+
+    else if (arrayVirus[i].colliderVirus[0]<=0 && arrayVirus[i].colliderVirus[1]<85 && arrayVirus[i].colliderVirus[2]>0 && arrayVirus[i].colliderVirus[3]<45){
+        arrayVirus[i].horVirus=!arrayVirus[i].horVirus;
+    }
+}
+
+
+
+
+
+
+void virusDisplay(int sumOfVirus){
+        for(int i = 0; i < sumOfVirus; i++) {
+        arrayVirus[i].movement();
+
+    }
+    }
+
+
+void virusRand(){
+    if (status){
+        srand(time(NULL));
+        for(int i = 0; i < 10; i++) {
+        int a=rand() % 80+1;
+        int b=rand() % 40+1;
+        arrayVirus[i].verVirus = rand() & 1;
+        arrayVirus[i].horVirus = rand() & 1;
+        arrayVirus[i].posisiAwal[0]=a;
+        arrayVirus[i].posisiAwal[1]=b;
+        arrayVirus[i].colliderVirus[0]=a;
+        arrayVirus[i].colliderVirus[1]=a+5;
+        arrayVirus[i].colliderVirus[2]=b;
+        arrayVirus[i].colliderVirus[3]=b+5;
+        arrayVirus[i].gerakVirus[0]=0;
+        arrayVirus[i].gerakVirus[1]=0;
+
+    }
+    }
+
 }
 
 void backgroundObject(){
@@ -1011,13 +1105,23 @@ void displayMe(void){
     glClear(GL_COLOR_BUFFER_BIT);
 
     backgroundObject();
-    //menu();
-
+    menu();
+    virusRand();
+    virusDisplay(5);
+    virusDisplay(10);
+  // Virus();
     dokterMove();
     obatObject();
 
-    randVirus();
-    virusObject();
+   // for(int i = 0; i < 6 ; i++){
+
+        // arrayVirus[4].movement();
+         //arrayVirus[5].movement();
+         //cout << "posisiobjek x : " << listt[i].posisiCube[0] << "\n";
+   // }
+   // randVirus();
+    //virusObject();
+    status=false;
     glFlush();
 	glutSwapBuffers();
 }
@@ -1029,10 +1133,20 @@ int main(int argc, char** argv){
 	glutInitWindowSize(1368, 728);
 	glutInitWindowPosition(0,0);
 	glutCreateWindow("Hello world!");
+	glutDisplayFunc(displayMe);
 	glutSpecialFunc(gerakDokter);
 	glutTimerFunc(0,timerObat,0);
     glutTimerFunc(0,timerVirus,0);
-	glutDisplayFunc(displayMe);
+    glutTimerFunc(0,timerVirus4,0);
+    glutTimerFunc(0,timerVirus2,0);
+    glutTimerFunc(0,timerVirus1,0);
+    glutTimerFunc(0,timerVirus3,0);
+    glutTimerFunc(0,timerVirus5,0);
+    glutTimerFunc(0,timerVirus6,0);
+    glutTimerFunc(0,timerVirus7,0);
+    glutTimerFunc(0,timerVirus8,0);
+    glutTimerFunc(0,timerVirus9,0);
+
 	//glutSpecialFunc(randVirus);
 
 	gluOrtho2D(-50, 100, -50, 50); //85,45
