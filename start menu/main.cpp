@@ -57,8 +57,7 @@ void background() {
 
 void judul() {
     glPushMatrix();
-    //glScaled(1.5, 1.5, 0);
-    glTranslated(20, 40, 0);
+    glTranslated(21, 40, 0);
     glLineWidth(10);
 
 
@@ -173,7 +172,6 @@ void judul() {
 	glVertex2f(44.6451674641152, 28.7893510765549);//V2
 	glVertex2f(43.4899999999999, 29.1443749999998);//W2
 	glVertex2f(44.6899999999998, 29.1643749999998);//Z2
-	//glVertex2f(44.6899999999998, 29.1643749999998);//Z2
 	glVertex2f(44.6899999999998, 30.4643749999998);//A3
 	glVertex2f(45.0499999999998, 30.4843749999998);//B3
 	glVertex2f(45.0299999999999, 32.2243749999998);//C3
@@ -186,7 +184,6 @@ void judul() {
 	glVertex2f(44.6451674641152, 28.7893510765549);//V2
 	glVertex2f(43.4699999999999, 28.0643749999998);//D3
 	glVertex2f(44.7299999999998, 28.0643749999998);//E3
-	//glVertex2f(44.7299999999998, 28.0643749999998);//E3
 	glVertex2f(44.6899999999998, 26.7243749999998);//F3
 	glVertex2f(45.1299999999998, 26.6843749999998);//G3
 	glVertex2f(45.0699999999999, 25.3243749999998);//H3
@@ -284,11 +281,28 @@ void menu() {
     glPopMatrix();
 }
 
+void drawText2(int x, int y, const char *string) {
+	glRasterPos2f(x, y);
+	int len = (int)strlen(string);
+	for (int i = 0; i < len; i++) {
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, string[i]);
+	}
+}
+
+void createdby() {
+    glPushMatrix();
+    glTranslated(-17, -83, 0);
+    glColor3f(1,1,1);
+    drawText2(66.111069078946, 95.6524342105263,"created by : Amiroh, Gavriel, Ratna, Ijul");
+    glPopMatrix();
+}
+
 void displayMe(void){
     glClear(GL_COLOR_BUFFER_BIT);
     background();
     judul();
     menu();
+    createdby();
 	glutSwapBuffers();
 }
 
