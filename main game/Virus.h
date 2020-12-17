@@ -352,6 +352,16 @@ class Virus{
     glPopMatrix();
 }
 
+    void VirusColl(){
+        glBegin(GL_QUADS); //Badan obat1
+        glColor3f(0.804, 0.804, 0.804);
+        glVertex2f(Virus::colliderVirus[0],Virus::colliderVirus[2]);
+        glVertex2f(Virus::colliderVirus[0],Virus::colliderVirus[3]);
+        glVertex2f(Virus::colliderVirus[1],Virus::colliderVirus[3]);
+        glVertex2f(Virus::colliderVirus[1],Virus::colliderVirus[2]);
+        glEnd();
+    }
+
     Virus(){
         glPushMatrix();
         //srand(time(NULL));
@@ -371,10 +381,12 @@ class Virus{
 //        makeCube::gerak[0]=0;
   //      makeCube::gerak[1]=0;
         virusObject();
+        VirusColl();
         glPopMatrix();
     }
 
     void movement(){
+        //Virus::VirusColl();
         glPushMatrix();
         //cout << "movemetn" << Virus::gerakVirus[1]<< "\n";
         glTranslated(Virus::gerakVirus[0],Virus::gerakVirus[1],0);
