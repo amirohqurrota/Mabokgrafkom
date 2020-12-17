@@ -20,17 +20,22 @@ using namespace std;
 
 
 int horizontal=0;
-int vertikalObat=45;
-float posisiObat[4]={20,25,38,45};
+int gerakObat[2]={0,0};
+int obatAwal[2]={40,45};
+float colliderObat[4]={40,45,45,52};
 int colliderWindowRight=85;
 int colliderWindowLeft=0;
 int colliderWindowTop=45;
 int colliderWindowBottom=0;
-float colliderDokter[4]={0,8,0,7};
+float colliderDokter[4]={0,7,0,11};
 Virus arrayVirus[20];
 
 int i;
 bool status=true;
+
+int imunitas=100;
+bool scoreStatus=true;
+bool scoreStatusVirus=true;
 
 
 
@@ -47,11 +52,13 @@ void cek(){
 
 
 }
-void text(int x, int y, const char *string) {
+void text(int x, int y, const char *string, void *font, float r, float g, float b){
+    // glScaled(1.5,1.5,0);
+    glColor3f(r, g, b);
 	glRasterPos2f(x, y);
 	int len = (int)strlen(string);
 	for (int i = 0; i < len; i++) {
-		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, string[i]);
+		glutBitmapCharacter(font, string[i]);
 	}
 }
 void menu(){
@@ -64,12 +71,12 @@ void menu(){
 	glVertex2f(35,10);
 	glEnd();
     glColor3b(100,0,0);
-    text(42,33,"MENU :");
+    text(42,33,"MENU :",GLUT_BITMAP_HELVETICA_18,0.0f,1.0f,1.0f);
 
     glPopMatrix();
 }
 void gerakDokter(int key, int x, int y){
-    cek();
+    //cek();
     if(GetAsyncKeyState(VK_RIGHT)){
         if (colliderDokter[1]<=colliderWindowRight){
             horizontal+=3;
@@ -89,9 +96,30 @@ void gerakDokter(int key, int x, int y){
 
 }
 
+void collObat(){
+    glBegin(GL_QUADS); //Badan obat1
+	glColor3f(0.804, 0.804, 0.804);
+	glVertex2f(colliderObat[0],colliderObat[2]);
+	glVertex2f(colliderObat[0],colliderObat[3]);
+	glVertex2f(colliderObat[1],colliderObat[3]);
+	glVertex2f(colliderObat[1],colliderObat[2]);
+	glEnd();
+}
+
+void collDokter(){
+    glBegin(GL_QUADS); //Badan obat1
+	glColor3f(0.804, 0.804, 0.804);
+	glVertex2f(colliderDokter[0],colliderDokter[2]);
+	glVertex2f(colliderDokter[0],colliderDokter[3]);
+	glVertex2f(colliderDokter[1],colliderDokter[3]);
+	glVertex2f(colliderDokter[1],colliderDokter[2]);
+	glEnd();
+}
+
 
 void dokterObject(){
     glPushMatrix();
+
     glLineWidth(5);
     glBegin(GL_POLYGON); //APD luar
 	glColor3f(0.8f, 0.8f, 0.9f);
@@ -247,11 +275,11 @@ void dokterMove(){
 
 void obatObject(){
     glPushMatrix();
-    glTranslated(0,vertikalObat,0);
-    glTranslated(25,30,0);
+    glTranslated(gerakObat[0],gerakObat[1],0);
+    glTranslated(obatAwal[0],obatAwal[1],0);
 
     glBegin(GL_POLYGON); //Badan obat1
-	glColor3f(0.0f,1.0f,0.0f);
+	glColor3f(0.804, 0.804, 0.804);
 	glVertex2f(0,0);
 	glVertex2f(5,0);
 	glVertex2f(5,4);
@@ -259,7 +287,7 @@ void obatObject(){
 	glEnd();
 
 	glBegin(GL_POLYGON); //badan obat2
-	glColor3f(0.0f,1.0f,0.0f);
+	glColor3f(0.855, 0.855, 0.855);
 	glVertex2f(4,4);
 	glVertex2f(4,5);
 	glVertex2f(1,5);
@@ -267,7 +295,7 @@ void obatObject(){
 	glEnd();
 
 	glBegin(GL_POLYGON); //badan obat3
-	glColor3f(0.0f,1.0f,0.0f);
+	glColor3f(1, 1, 1);
 	glVertex2f(3.32,5);
 	glVertex2f(3.32,5.98);
 	glVertex2f(1.61,5.96);
@@ -305,6 +333,23 @@ void obatObject(){
 	glVertex2f(3.98,1.47);
 	glVertex2f(1.0,1.49);
 	glEnd();
+
+	glLineWidth(5);//outline obat
+	glBegin(GL_LINE_LOOP);
+	glColor3f(1.0,1.0,1.0);
+	glVertex2f(0,0);//A
+	glVertex2f(0,4);//D
+	glVertex2f(1,4);//H
+	glVertex2f(1,5);//G
+	glVertex2f(1.59,5);//L
+	glVertex2f(1.61,5.96);//K
+	glVertex2f(3.32337,5.98376);//J
+	glVertex2f(3.32,5);//I
+	glVertex2f(4,5);//F
+	glVertex2f(4,4);//E
+	glVertex2f(5,4);//C
+	glVertex2f(5,0);//B
+	glEnd();
 	glPopMatrix();
 
 
@@ -314,15 +359,20 @@ void timerObat(int){
     obatObject();
     glutPostRedisplay();
     glutTimerFunc(1000/30,timerObat,0);
-    if (posisiObat[3]>=-0){
-        posisiObat[2]-=0.5;
-        posisiObat[3]-=0.5;
-        vertikalObat-=1;
+    if (colliderObat[3]>=-0){
+        colliderObat[2]-=1;
+        colliderObat[3]-=1;
+        gerakObat[1]-=1;
     }
     else{
-        posisiObat[2]=40;
-        posisiObat[3]=47;
-        vertikalObat=45;
+        colliderObat[2]=45;
+        colliderObat[3]=52;
+        int x=rand() % 80+1;
+        colliderObat[0]=x;
+        colliderObat[1]=x+5;
+        obatAwal[0]=x;
+        gerakObat[1]=0;
+
     }
 
 }
@@ -796,13 +846,6 @@ void timerVirus9(int){
     }
 }
 
-
-
-void score
-
-
-
-
 void virusDisplay(int sumOfVirus){
         for(int i = 0; i < sumOfVirus; i++) {
         arrayVirus[i].movement();
@@ -833,7 +876,47 @@ void virusRand(){
 
 }
 
-void backgroundObject(){
+
+void collisionDokterObat(){
+
+    bool collDokterObatX=colliderObat[1]>=colliderDokter[0] && colliderObat[0]<=colliderDokter[1]+5;
+    bool collDokterObatY=colliderObat[2]<=colliderDokter[3];
+    if (colliderObat[2]==45){
+        scoreStatus=true;
+    }
+    if (collDokterObatX && collDokterObatY && scoreStatus ){
+        imunitas+=10;
+
+        cout << "imun nambah: " << imunitas << "\n";
+        cout << "status 2 " << scoreStatus << "\n";
+        scoreStatus=false;
+
+    }
+}
+
+void collisionDokterVirus(){
+    int i=0;
+    bool collDokterVirusX=arrayVirus[i].colliderVirus[1]>=colliderDokter[0] && arrayVirus[i].colliderVirus[0]<=colliderDokter[1]+5;
+    bool collDokterVirusY=arrayVirus[i].colliderVirus[2]<=colliderDokter[3];
+    if (!collDokterVirusY){
+        scoreStatusVirus=true;
+    }
+    if (collDokterVirusX && collDokterVirusY && scoreStatusVirus ){
+        imunitas-=20;
+
+        cout << "imun berkurang: " << imunitas << "\n";
+        cout << "status 2 " << scoreStatus << "\n";
+        scoreStatusVirus=false;
+
+    }
+}
+
+void score(){
+    collisionDokterObat();
+    collisionDokterVirus();
+}
+
+void backgroundObject1(){
     glPushMatrix();
     glScaled(0.57,0.43,0);
     glBegin(GL_POLYGON); //langit biru
@@ -1103,17 +1186,25 @@ void backgroundObject(){
 
 }
 
+
+
+
+
 void displayMe(void){
     glClear(GL_COLOR_BUFFER_BIT);
 
-    backgroundObject();
-    menu();
+    backgroundObject1();
+    //menu();
     virusRand();
     virusDisplay(5);
     virusDisplay(10);
   // Virus();
+
+    //collDokter();
     dokterMove();
     obatObject();
+    //collObat();
+    score();
 
    // for(int i = 0; i < 6 ; i++){
 
@@ -1139,19 +1230,19 @@ int main(int argc, char** argv){
 	glutSpecialFunc(gerakDokter);
 	glutTimerFunc(0,timerObat,0);
     glutTimerFunc(0,timerVirus,0);
-    glutTimerFunc(0,timerVirus4,0);
-    glutTimerFunc(0,timerVirus2,0);
-    glutTimerFunc(0,timerVirus1,0);
-    glutTimerFunc(0,timerVirus3,0);
-    glutTimerFunc(0,timerVirus5,0);
-    glutTimerFunc(0,timerVirus6,0);
-    glutTimerFunc(0,timerVirus7,0);
-    glutTimerFunc(0,timerVirus8,0);
-    glutTimerFunc(0,timerVirus9,0);
+    //glutTimerFunc(0,timerVirus4,0);
+//    glutTimerFunc(0,timerVirus2,0);
+  //  glutTimerFunc(0,timerVirus1,0);
+    //glutTimerFunc(0,timerVirus3,0);
+//    glutTimerFunc(0,timerVirus5,0);
+  //  glutTimerFunc(0,timerVirus6,0);
+   // glutTimerFunc(0,timerVirus7,0);
+//    glutTimerFunc(0,timerVirus8,0);
+  //  glutTimerFunc(0,timerVirus9,0);
 
 	//glutSpecialFunc(randVirus);
 
-	gluOrtho2D(0, 85, 0, 45); //85,45
+	gluOrtho2D(0, 85, 0, 60); //85,45
 	glutMainLoop();
 	return 0;
 }

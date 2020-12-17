@@ -376,7 +376,7 @@ class Virus{
 
     void movement(){
         glPushMatrix();
-        cout << "movemetn" << Virus::gerakVirus[1]<< "\n";
+        //cout << "movemetn" << Virus::gerakVirus[1]<< "\n";
         glTranslated(Virus::gerakVirus[0],Virus::gerakVirus[1],0);
         Virus::virusObject();
         glPopMatrix();

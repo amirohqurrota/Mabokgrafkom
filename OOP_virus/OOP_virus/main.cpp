@@ -154,7 +154,16 @@ void timerCube4(int){
     }
 
 
+void text(int x, int y, const char *string, void *font, float r, float g, float b){
+    // glScaled(1.5,1.5,0);
 
+    glColor3f(r, g, b);
+	glRasterPos2f(x, y);
+	int len = (int)strlen(string);
+	for (int i = 0; i < len; i++) {
+		glutBitmapCharacter(font, string[i]);
+	}
+}
 
 void makeMoreCube(int sumOfCubes){
     srand (time(0));
@@ -182,13 +191,26 @@ void displayMe(void){
     glClear(GL_COLOR_BUFFER_BIT);
     bool status=false;
     //makeCube obj1= makeCube();
+    glPushMatrix();
+    glTranslatef(-18, 0, 0); //-(5x4)+5 // -((lebar+scaled)+x-0) //-20+7 // -((x-0)*scaled)+lebar
+    glScaled(5,5,0);
+    glBegin(GL_QUADS);
+        glColor3b(250,100,0);
+        glVertex2f(5,0);
+        glVertex2f(5,5);
+        glVertex2f(12,5);
+        glVertex2f(12,0);
+        glEnd();
+    glPopMatrix();
+   // glScalef(2,2,0);
+    text(6,5,"MENU :",GLUT_BITMAP_HELVETICA_18,0.0f,1.0f,1.0f);
 
     //listt[0]=makeCube();
     //obj1.gerak[0]=-20;
-     for(int i = 0; i < 6 ; i++){
-         listt[i].movement();
-         cout << "posisiobjek x : " << listt[i].posisiCube[0] << "\n";
-    }
+     //for(int i = 0; i < 6 ; i++){
+      //   listt[i].movement();
+      //   cout << "posisiobjek x : " << listt[i].posisiCube[0] << "\n";
+   // }
 
 
     //listt[0].movement();
@@ -215,13 +237,9 @@ int main(int argc, char** argv){
 	glutInitWindowSize(728, 728);
 	glutInitWindowPosition(0,0);
 	glutCreateWindow("Hello world!");
-	glutTimerFunc(0,timerCube,0);
-	glutTimerFunc(0,timerCube1,0);
-	glutTimerFunc(0,timerCube2,0);
-	glutTimerFunc(0,timerCube3,0);
-	glutTimerFunc(0,timerCube4,0);
+
 	glutDisplayFunc(displayMe);
-	gluOrtho2D(-40,40,-40,40);
+	gluOrtho2D(0,40,0,40);
 	glutMainLoop();
 	return 0;
 }
