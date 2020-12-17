@@ -231,15 +231,45 @@ void background(){
     glEnd();
 }
 
+void Darahmu (){
+    glBegin(GL_POLYGON);
+    glColor3f(0,0,0);
+    glVertex2f(78.29, 45.53);
+    glVertex2f(78.29, 44);
+    glVertex2f(85, 44);
+    glVertex2f(85, 45.53);
+    glEnd();
+}
+
+void Darah (){
+    glBegin(GL_POLYGON);
+    glColor3f(0.678, 0, 0.024);
+    glVertex2f(70.6, 43.8);
+    glVertex2f(84.8, 43.8);
+    glVertex2f(84.8, 42.2);
+    glVertex2f(70.6, 42.2);
+    glEnd();
+}
+
 void score(){
     //codingane taruh siniii
-
+    glBegin(GL_POLYGON);
+    glColor3f(0,0,0);
+    glVertex2f(70.4, 44);
+    glVertex2f(85, 44);
+    glVertex2f(85, 42);
+    glVertex2f(70.4, 42);
+    glEnd();
 }
+
+
 
 void displayMe(void){
     glClear(GL_COLOR_BUFFER_BIT);
     background();
     score();
+    Darah();
+    Darahmu();
 
 
 	glutSwapBuffers();

@@ -1,8 +1,16 @@
 # depslib dependency file v1.0
-1608172587 source:d:\itb\sem 3\new folder (2)\project mabok grafkom\mabokgrafkom\background2-revisi\main.cpp
+1608096420 source:c:\users\core-i3\downloads\grafika komputer\start menu\main.cpp
 	<GL/gl.h>
 	<GL/glu.h>
 	<GL/glut.h>
+	<iostream>
+	<windows.h>
+	<GLUT/glut.h>
+	<GL/glut.h>
+	<stdlib.h>
+	<fstream>
+	<cstdlib>
+	<ctime>
 
 1301111164 c:\program files (x86)\codeblocks\mingw\include\gl\gl.h
 
@@ -10,7 +18,7 @@
 	<stddef.h>
 	<GL/gl.h>
 
-881786480 c:\program files (x86)\codeblocks\mingw\include\gl\glut.h
+976692172 c:\program files (x86)\codeblocks\mingw\include\gl\glut.h
 	<windows.h>
 	<GL/gl.h>
 	<GL/glu.h>
@@ -218,9 +226,4 @@
 
 1301111156 c:\program files (x86)\codeblocks\mingw\include\oleidl.h
 	<objfwd.h>
-
-1608035767 source:c:\users\hp\documents\semester 3\grafika komputer\mabokgrafkom\background2-revisi\main.cpp
-	<GL/gl.h>
-	<GL/glu.h>
-	<GL/glut.h>
 
