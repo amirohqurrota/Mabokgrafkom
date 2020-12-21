@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1608096420 source:c:\users\core-i3\downloads\grafika komputer\start menu\main.cpp
+1608562757 source:c:\users\core-i3\downloads\grafika komputer\start menu\main.cpp
 	<GL/gl.h>
 	<GL/glu.h>
 	<GL/glut.h>
