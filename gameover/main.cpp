@@ -54,11 +54,11 @@ void background() {
 
 void over() {
     glPushMatrix();
-    glTranslated(21, 40, 0);
+    glTranslated(0, 5, 0);
     glLineWidth(10);
 
 
-glBegin(GL_LINES); //huruf G
+    glBegin(GL_LINES); //huruf G
 	glColor3f(1,0,0);
 	glVertex2f(22.5775965827964,28.5743484549706); //G
 	glVertex2f(18.6717757575239,28.5743484549706); //H
@@ -272,6 +272,7 @@ void drawText(int x, int y, const char *string) {
 
 void score() {
     glPushMatrix();
+    glTranslated(-22, -15, 0);
     glBegin(GL_POLYGON);
     glColor3f(0.576, 0.463, 0.153);
     glVertex2f(56.8688312322439, 36.6002343749999);
@@ -295,7 +296,7 @@ void drawText2(int x, int y, const char *string) {
 
 void exit() {
     glPushMatrix();
-    glTranslated(-17, -83, 0);
+    glTranslated(-37, -95, 0);
     glColor3f(1,1,1);
     drawText2(75,100,"Press esc to exit");
     glPopMatrix();
@@ -311,7 +312,7 @@ void drawText3(int x, int y, const char *string) {
 
 void menu() {
     glPushMatrix();
-    glTranslated(-17, -83, 0);
+    glTranslated(-36, -95, 0);
     glColor3f(1,1,1);
     drawText2(72,97,"Press spacebar to menu");
     glPopMatrix();
@@ -342,7 +343,7 @@ int main(int argc, char** argv){
 	glutInitWindowPosition(0,0);
 	glutCreateWindow("Game Over");
 	glutDisplayFunc(displayMe);
-	gluOrtho2D(0, 130, 0, 130);
+	gluOrtho2D(0, 85, 0, 45);
 	init();
 	glutMainLoop();
 	return 0;
