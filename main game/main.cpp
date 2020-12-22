@@ -17,6 +17,7 @@ using namespace std;
 #include <cstdlib>   // rand and srand
 #include <ctime>
 #include "Virus.h"
+//#include "CollVirus.h"
 
 
 int horizontal=0;
@@ -27,15 +28,25 @@ int colliderWindowRight=85;
 int colliderWindowLeft=0;
 int colliderWindowTop=45;
 int colliderWindowBottom=0;
+
 float colliderDokter[4]={0,7,0,11};
+float gerakDokter[2]={0,0};
+bool horDokter=true;
+
 Virus arrayVirus[20];
 
 int i;
-bool status=true;
+bool status=true; //andVirus
+bool statusDeleteVirus=true;
 
-int imunitas=20;
+int imunitas=30;
+int scorePoin=0;
+int pertambahanPoin=2;
 bool scoreStatus=true;
-bool scoreStatusVirus=true;
+
+bool playStatus=false;
+bool mode1Status=true;
+bool gameOverStatus=false;
 
 
 
@@ -75,27 +86,37 @@ void menu(){
 
     glPopMatrix();
 }
-void gerakDokter(int key, int x, int y){
+void dokterKeyboard(int key, int x, int y){
     //cek();
     if(GetAsyncKeyState(VK_RIGHT)){
-        if (colliderDokter[1]<=colliderWindowRight){
-            horizontal+=3;
-            colliderDokter[1]+=3;
-            colliderDokter[0]+=3;
-            glutPostRedisplay();
+        if (colliderDokter[1]<=85){
+            horDokter=true;
+            colliderDokter[0]+=0.5;
+            colliderDokter[1]+=0.5;
+            gerakDokter[0]+=0.5;
         }
     }
     if (GetAsyncKeyState(VK_LEFT)){
-        if (colliderDokter[0]>=colliderWindowLeft){
-            horizontal-=3;
-            colliderDokter[1]-=3;
-            colliderDokter[0]-=3;
-            glutPostRedisplay();
+        if (colliderDokter[0]>=0){
+            horDokter=false;
+            colliderDokter[0]-=0.5;
+            colliderDokter[1]-=0.5;
+            gerakDokter[0]-=0.5;
         }
-    }
 
+    }
+    glutPostRedisplay();
 }
 
+void keyboard(unsigned char key, int x, int y){
+    if (key==32 && !playStatus){
+        playStatus=true;
+        mode1Status=true;
+    }
+    if (key==27){
+        exit(0);
+    }
+}
 void collObat(){
     glBegin(GL_QUADS); //Badan obat1
 	glColor3f(0.804, 0.804, 0.804);
@@ -119,6 +140,8 @@ void collDokter(){
 
 void dokterObject(){
     glPushMatrix();
+    glTranslated(gerakDokter[0],0,0);
+    glScaled(1.1,1.1,0);
 
     glLineWidth(5);
     glBegin(GL_POLYGON); //APD luar
@@ -271,6 +294,32 @@ void dokterMove(){
     glScaled(1.1,1.1,0);
     dokterObject();
 	glPopMatrix();
+}
+
+void timerDokter(int){
+    if (playStatus){
+        cout << "===================================== " << "\n";
+        dokterObject();
+        glutPostRedisplay();
+        glutTimerFunc(1000/30,timerDokter,0);
+        if (horDokter){
+            colliderDokter[0]+=0.5;
+            colliderDokter[1]+=0.5;
+            gerakDokter[0]+=0.5;
+        }
+        else{
+            colliderDokter[0]-=0.5;
+            colliderDokter[1]-=0.5;
+            gerakDokter[0]-=0.5;
+        }
+
+        if (colliderDokter[1]>=85){
+            horDokter=false;
+        }
+        if (colliderDokter[0]<=0){
+            horDokter=true;
+        }
+    }
 }
 
 void obatObject(){
@@ -853,10 +902,10 @@ void virusDisplay(int sumOfVirus){
     }
     }
 
-void virusRand(){
+void virusRand(int a){
     if (status){
         srand(time(NULL));
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < a; i++) {
         int a=rand() % 80+1;
         int b=rand() % 40+1;
         arrayVirus[i].verVirus = rand() & 1;
@@ -875,11 +924,50 @@ void virusRand(){
 
 }
 
+void deleteVirus(){
+    if (statusDeleteVirus){
+    for(int i = 0; i < 10; i++) {
+        arrayVirus[i].posisiAwal[0]=1000;
+        arrayVirus[i].posisiAwal[1]=1000;
+        arrayVirus[i].colliderVirus[0]=1000;
+        arrayVirus[i].colliderVirus[1]=1000+5;
+        arrayVirus[i].colliderVirus[2]=1000;
+        arrayVirus[i].colliderVirus[3]=1000+5;
+        arrayVirus[i].gerakVirus[0]=0;
+        arrayVirus[i].gerakVirus[1]=0;
+    }
+    }
+}
+
+void timerMode(int){
+    if (playStatus){
+        //if (mode1Status){
+            glutTimerFunc(5000,timerMode,0);
+            mode1Status=false;
+            if(statusDeleteVirus){
+                status=true;
+            }
+
+
+
+        //}
+    }
+}
+
+void timerScore(int){
+    if (playStatus){
+        //if (mode1Status){
+            scorePoin+=1;
+            glutTimerFunc(1000,timerScore,0);
+
+        //}
+    }
+}
+
 
 //===============================SCORE==============================
 void collisionDokterObat(){
-
-    bool collDokterObatX=colliderObat[1]>=colliderDokter[0] && colliderObat[0]<=colliderDokter[1]+5;
+    bool collDokterObatX=colliderObat[1]<=colliderDokter[1]+5 && colliderObat[0]>=colliderDokter[0]-5;
     bool collDokterObatY=colliderObat[2]<=colliderDokter[3];
     if (colliderObat[2]==45){
         scoreStatus=true;
@@ -894,21 +982,47 @@ void collisionDokterObat(){
     }
 }
 
+class CollisionVirus{
+public:
+    int a;
+    bool scoreStatusVirus=true;
+    bool collDokterVirusX;
+    bool collDokterVirusY;
+
+    CollisionVirus(int a){
+        //int i=0;
+        bool collDokterVirusX=arrayVirus[a].colliderVirus[1]<=colliderDokter[1]+5 && arrayVirus[a].colliderVirus[0]>=colliderDokter[0]-5;
+        bool collDokterVirusY=arrayVirus[a].colliderVirus[2]<=colliderDokter[3];
+        //if (!collDokterVirusX || !collDokterVirusY){
+        bool scoreStatusVirus=arrayVirus[a].colliderVirus[1]>=colliderDokter[1]+5 || arrayVirus[a].colliderVirus[0]<=colliderDokter[0]-5 ;
+            //cout << "masuk ke iF uba boll: " << scoreStatusVirus << "\n";
+        //}
+        if (collDokterVirusX && collDokterVirusY && scoreStatusVirus){
+            imunitas-=1;
+
+            cout << "imun berkurang: " << imunitas << "\n";
+            cout << "status 2 " << scoreStatusVirus << "\n";
+            scoreStatusVirus=false;
+        }
+}
+};
+
 void collisionDokterVirus(){
-    int i=0;
-    bool collDokterVirusX=arrayVirus[i].colliderVirus[1]>=colliderDokter[0] && arrayVirus[i].colliderVirus[0]<=colliderDokter[1]+5;
-    bool collDokterVirusY=arrayVirus[i].colliderVirus[2]<=colliderDokter[3];
-    if (!collDokterVirusY){
-        scoreStatusVirus=true;
-    }
-    if (collDokterVirusX && collDokterVirusY && scoreStatusVirus ){
-        imunitas-=2;
+   // for(int a = 0; a < 20; a++) {
+        CollisionVirus(0);
+        CollisionVirus(1);
+        CollisionVirus(2);
+        CollisionVirus(3);
+        CollisionVirus(4);
+        CollisionVirus(5);
+        CollisionVirus(6);
+        CollisionVirus(7);
+        CollisionVirus(8);
+        CollisionVirus(9);
+        CollisionVirus(10);
+        CollisionVirus(11);
 
-        cout << "imun berkurang: " << imunitas << "\n";
-        cout << "status 2 " << scoreStatus << "\n";
-        scoreStatusVirus=false;
-
-    }
+    //}
 }
 
 void score(){
@@ -1455,36 +1569,280 @@ void background2(){
     glEnd();
 }
 
+void gameOver() {
+    glPushMatrix();
+    glTranslated(0, 5, 0);
+    glLineWidth(15);
 
 
+    glBegin(GL_LINES); //huruf G
+	glColor3f(1,0,0);
+	glVertex2f(22.5775965827964,28.5743484549706); //G
+	glVertex2f(18.6717757575239,28.5743484549706); //H
+	glVertex2f(18.6193486323525,21.2345509309685); //I
+	glVertex2f(22.5513830202107,21.1296966806256); //J
+	glVertex2f(22.5513830202107,25.0879446310696); //K
+	glVertex2f(20.4805115759387,25.0879446310696); //L
+    glEnd();
+    glBegin(GL_LINES);
+    glColor3f(1,0,0);
+    glVertex2f(18.6717757575239,28.5743484549706);
+    glVertex2f(18.6193486323525,21.2345509309685); //I
+	glVertex2f(22.5513830202107,21.1296966806256); //J
+	glVertex2f(22.5513830202107,25.0879446310696); //K
+	glEnd();
 
+	glBegin(GL_LINES);//huruf A
+	glColor3f(1, 0, 0);
+	glVertex2f(24.491186651554,21.0772695554542);//M
+	glVertex2f(24.4649730889683,23.1219274371404);//N
+	glVertex2f(25.0154579032685,23.1219274371404); //O
+	glVertex2f(24.963030778097,26.1364871344984);//P
+	glVertex2f(25.5135155923972,26.084060009327);//Q
+	glVertex2f(25.4610884672257,28.5481348923848);//R
+	glVertex2f(27.4271056611548,28.5481348923848);//S
+	glVertex2f(27.4795327863263,26.084060009327);//T
+	glVertex2f(28,26);//U
+	glVertex2f(28.0038040380407,23.1481409997262);//V
+	glVertex2f(28.3970074768265,23.069500311969);//W
+	glVertex2f(28.4232210394123,21.0510559928684);//Z
+    glEnd();
+    glBegin(GL_LINES);
+    glColor3f(1,0,0);
+    glVertex2f(24.4649730889683,23.1219274371404);//N
+    glVertex2f(28.3970074768265,23.069500311969);//W
+    glVertex2f(25.4610884672257,28.5481348923848);//R
+    glVertex2f(27.4271056611548,28.5481348923848);//S
+    glVertex2f(24.963030778097,26.1364871344984);//P
+	glVertex2f(25.5135155923972,26.084060009327);//Q
+	glVertex2f(27.4795327863263,26.084060009327);//T
+	glVertex2f(28,26);//U
+    glEnd();
+
+	glBegin(GL_LINES); //huruf M
+	glColor3f(1, 0, 0);
+	glVertex2f(29.8649669816269,21.1034831180399);//A1
+	glVertex2f(29.8911805442127,28.4957077672134);//B1
+	glEnd();
+	glBegin(GL_LINES);
+	glColor3f(1,0,0);
+    glVertex2f(32.8533131163992,28.4957077672134);//E1
+	glVertex2f(32.8533131163992,21.0510559928684);//F1
+	glEnd();
+	glBegin(GL_LINES);
+	glColor3f(1,0,0);
+	glVertex2f(35.8940863763429,28.5743484549706);//C1
+	glVertex2f(35.8154456885857,21.0510559928684);//D1
+	glEnd();
+
+	glBegin(GL_LINES);
+	glColor3f(1,0,0);
+	glVertex2f(29.8911805442127,28.4957077672134);//B1
+	glVertex2f(35.8940863763429,28.5743484549706);//C1
+	glEnd();
+
+
+	glBegin(GL_LINES); //Huruf E
+	glColor3f(1, 0, 0);
+	glVertex2f(41.2590756768552,28.545423893915);//G1
+	glVertex2f(38.2267547772029,28.545423893915);//H1
+	glVertex2f(38.2628538355321,21.1812159947594);//I1
+	glVertex2f(41.2590756768552,21.109017878101);//J1
+	glVertex2f(38.2989528938613,25.0438152359832);//K1
+	glVertex2f(41.2951747351844,25.007716177654);//L1
+	glEnd();
+	glBegin(GL_LINES);
+	glColor3f(1,0,0);
+	glVertex2f(38.2267547772029,28.545423893915);//H1
+    glVertex2f(38.2628538355321,21.1812159947594);//I1
+    glEnd();
+
+	glBegin(GL_LINES);//Huruf O
+	glColor3f(1, 0, 0);
+	glVertex2f(43.5694154099236,28.1483342522939);//M1
+	glVertex2f(43.6055144682528,21.5061075197221);//N1
+	glVertex2f(48.557990670051,21.5538440338011);//Q1
+	glVertex2f(48.5550439139275,28.1371853464544);//R1
+	glEnd();
+	glBegin(GL_LINES);//Huruf O
+	glColor3f(1, 0, 0);
+	glVertex2f(44.0748022265323,21.0368197614426);//O1
+	glVertex2f(48.117896759402,21.0368197614426);//P1
+	glVertex2f(48.021782641925,28.54925087482);//S1
+	glVertex2f(44.1070491264353,28.5235791239323);//T1
+	glEnd();
+
+
+	glBegin(GL_LINES);//Huruf v
+	glColor3f(1, 0, 0);
+	glVertex2f(49.994478166364,28.7035848185276);//U1
+	glVertex2f(50,24);//V1
+	glVertex2f(50.5614075066036,24.0421401781123);//W1
+	glVertex2f(50.5614075066036,23.5119623608881);//Z1
+	glVertex2f(51.0915853238278,23.6494158690573);//A2
+	glVertex2f(51,23);//B2
+	glVertex2f(51.5628544946937,23.0603294054749);//C2
+	glVertex2f(51.5235820637882,22.5694240191562);//D2
+	glVertex2f(52.0537598810124,22.5301515882507);//E2
+	glVertex2f(52.0144874501069,21.6661581083298);//F2
+	glVertex2f(52.9766620072915,21.5483408156133);//G2
+	glVertex2f(52.9570257918388,22.5890602346089);//H2
+	glVertex2f(53.5068398245157,22.5694240191562);//I2
+	glVertex2f(53.4479311781575,23.1977829136441);//J2
+	glVertex2f(53.9977452108344,23.1585104827386);//K2
+	glVertex2f(53.8995641335707,23.6494158690573);//L2
+    glVertex2f(54.4167101970082,23.5664176698702);//M2
+	glVertex2f(54.4026999404128,24.0847971638997);//N2
+	glVertex2f(55,24);//O2
+	glVertex2f(54.9047437298755,28.7349598427007);//P2
+	glEnd();
+	glBegin(GL_LINES);
+	glVertex2f(50,24);//V1
+	glVertex2f(50.5614075066036,24.0421401781123);//W1
+	glVertex2f(50.5614075066036,23.5119623608881);//Z1
+	glVertex2f(51.0915853238278,23.6494158690573);//A2
+	glVertex2f(51,23);//B2
+	glVertex2f(51.5628544946937,23.0603294054749);//C2
+	glVertex2f(51.5235820637882,22.5694240191562);//D2
+	glVertex2f(52.0537598810124,22.5301515882507);//E2
+	glVertex2f(52.0144874501069,21.6661581083298);//F2
+	glVertex2f(52.9766620072915,21.5483408156133);//G2
+	glVertex2f(52.9570257918388,22.5890602346089);//H2
+	glVertex2f(53.5068398245157,22.5694240191562);//I2
+	glVertex2f(53.4479311781575,23.1977829136441);//J2
+	glVertex2f(53.9977452108344,23.1585104827386);//K2
+	glVertex2f(53.8995641335707,23.6494158690573);//L2
+    glVertex2f(54.4167101970082,23.5664176698702);//M2
+	glVertex2f(54.4026999404128,24.0847971638997);//N2
+	glVertex2f(55,24);//O2
+	glEnd();
+
+
+	glBegin(GL_LINES);//huruf E
+	glColor3f(1, 0, 0);
+	glVertex2f(59.5353452810274,28.5234095180288);//Q2
+	glVertex2f(56.2680680444279,28.4999039263985);//R2
+	glVertex2f(56.4796183690998,24.9740651818667);//U2
+	glVertex2f(59.3708061396159,24.9740651818667);//V2
+	glVertex2f(56.4091015942091,21.0721369712514);//S2
+	glVertex2f(59.3943117312461,21.0721369712514);//T2
+	glEnd();
+	glBegin(GL_LINES);
+	glVertex2f(56.2680680444279,28.4999039263985);//R2
+	glVertex2f(56.4091015942091,21.0721369712514);//S2
+	glEnd();
+
+	glBegin(GL_LINES);//huruf R
+	glColor3f(1, 0, 0);
+	glVertex2f(60.8159433978148,28.5911781528008);//Z2
+	glVertex2f(60.8544840552775,21.0757499475793);//W2
+	glVertex2f(64.7470904590076,28.5719078240694);//A3
+	glVertex2f(64.7856311164702,25.4308442408615);//B3
+	glEnd();
+    glBegin(GL_LINES);
+	glColor3f(1, 0, 0);
+	glVertex2f(60.8159433978148,28.5911781528008);//Z2
+	glVertex2f(64.7470904590076,28.5719078240694);//A3
+	glVertex2f(64.7856311164702,25.4308442408615);//B3
+	glVertex2f(60.9315653702028,25.5079255557868);//C3
+	glEnd();
+	glBegin(GL_LINES);
+	glVertex2f(61.8180004918443,25.4886552270555);//D3
+	glVertex2f(61.8372708205757,24.5058684617573);//E3
+	glVertex2f(62.2997587101278,24.54440911922);//F3
+	glVertex2f(62.3036977588554,24.0477445358396);//G3
+	glVertex2f(62.8020131804195,24.0208085671064);//H3
+	glVertex2f(62.8154811647861,23.5494291142754);//I3
+	glVertex2f(63.3003286019836,23.5224931455422);//J3
+	glVertex2f(63.2733926332504,23.0376457083447);//K3
+	glVertex2f(63.7851760391811,23.0376457083447);//L3
+	glVertex2f(63.7582400704479,22.593202224247);//M3
+	glVertex2f(64.2834914607452,22.5662662555138);//N3
+	glVertex2f(64.2430875076454,21.5831033967522);//O3
+	glVertex2f(64.7683388979427,21.5831033967522);//P3
+	glVertex2f(64.7683388979427,21.0982559595547);//Q3
+	glEnd();
+	glBegin(GL_LINES);
+	glVertex2f(61.8372708205757,24.5058684617573);//E3
+	glVertex2f(62.2997587101278,24.54440911922);//F3
+	glVertex2f(62.3036977588554,24.0477445358396);//G3
+	glVertex2f(62.8020131804195,24.0208085671064);//H3
+	glVertex2f(62.8154811647861,23.5494291142754);//I3
+	glVertex2f(63.3003286019836,23.5224931455422);//J3
+	glVertex2f(63.2733926332504,23.0376457083447);//K3
+	glVertex2f(63.7851760391811,23.0376457083447);//L3
+	glVertex2f(63.7582400704479,22.593202224247);//M3
+	glVertex2f(64.2834914607452,22.5662662555138);//N3
+	glVertex2f(64.2430875076454,21.5831033967522);//O3
+	glVertex2f(64.7683388979427,21.5831033967522);//P3
+	glEnd();
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslated(-22, -15, 0);
+    glBegin(GL_POLYGON);
+    glColor3f(0.576, 0.463, 0.153);
+    glVertex2f(56.8688312322439, 36.6002343749999);
+    glVertex2f(71.9872971413351, 36.6002343749999);
+    glVertex2f(71.8837460049714, 29.5587571022725);
+    glVertex2f(56.8688312322439, 29.4552059659088);
+    glEnd();
+    glColor3f(1,1,1);
+    text(62.5, 35,"Score :",GLUT_BITMAP_TIMES_ROMAN_24,1,1,1);
+    glPopMatrix();
+
+    text(38.5,10,"Press esc to exit",GLUT_BITMAP_HELVETICA_18,1,1,1);
+    text(36.5,8,"Press spacebar to menu",GLUT_BITMAP_HELVETICA_18,1,1,1);
+}
+
+
+void mode1(){
+    if(mode1Status && !gameOverStatus){
+       background1();
+        kotakDarah();
+        updatePoin();
+        virusRand(5);
+        virusDisplay(5);
+        dokterObject();
+        obatObject();
+        score();
+        status=false; //untuk timer random virus
+    }
+
+}
+
+void mode2(){
+    if(!mode1Status && !gameOverStatus){
+        background2();
+        kotakDarah();
+        updatePoin();
+        deleteVirus();
+        virusRand(10);
+        virusDisplay(10);
+        dokterObject();
+        obatObject();
+        score();
+        status=false; //untuk timer virus
+        statusDeleteVirus=false;
+    }
+}
 
 void displayMe(void){
     glClear(GL_COLOR_BUFFER_BIT);
-
-    background1();
-    kotakDarah();
-    updatePoin();
-    //menu();
-    virusRand();
-    virusDisplay(10);
-  // Virus();
-    //collDokter();
-    dokterMove();
-    obatObject();
-
-    //collObat();
-    score();
-
-   // for(int i = 0; i < 6 ; i++){
-
-        // arrayVirus[4].movement();
-         //arrayVirus[5].movement();
-         //cout << "posisiobjek x : " << listt[i].posisiCube[0] << "\n";
-   // }
-   // randVirus();
-    //virusObject();
-    status=false;
+    if (!playStatus && !gameOverStatus){
+        menu();
+    }
+    if(playStatus && imunitas>0){
+        mode1();
+        mode2();
+    }
+    if(imunitas==0){
+        statusDeleteVirus=true;
+        deleteVirus();
+        playStatus=false;
+        gameOverStatus=true;
+        gameOver();
+    }
     glFlush();
 	glutSwapBuffers();
 }
@@ -1497,8 +1855,12 @@ int main(int argc, char** argv){
 	glutInitWindowPosition(0,0);
 	glutCreateWindow("Hello world!");
 	glutDisplayFunc(displayMe);
-	glutSpecialFunc(gerakDokter);
+	glutSpecialFunc(dokterKeyboard);
+	glutKeyboardFunc(keyboard);
+	glutTimerFunc(1000,timerScore,0);
+	glutTimerFunc(0,timerMode,0);
 	glutTimerFunc(0,timerObat,0);
+	glutTimerFunc(0,timerDokter,0);
     glutTimerFunc(0,timerVirus,0);
     glutTimerFunc(0,timerVirus4,0);
     glutTimerFunc(0,timerVirus2,0);

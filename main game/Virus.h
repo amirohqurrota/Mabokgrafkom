@@ -364,6 +364,14 @@ class Virus{
 
     Virus(){
         glPushMatrix();
+        Virus::posisiAwal[0]=1000;
+        Virus::posisiAwal[1]=1000;
+        Virus::colliderVirus[0]=1000;
+        Virus::colliderVirus[1]=1000+5;
+        Virus::colliderVirus[2]=1000;
+        Virus::colliderVirus[3]=1000+5;
+        Virus::gerakVirus[0]=0;
+        Virus::gerakVirus[1]=0;
         //srand(time(NULL));
             //makeCube::posisiCube[2]=a;
             //makeCube::awalY=inputany1;
