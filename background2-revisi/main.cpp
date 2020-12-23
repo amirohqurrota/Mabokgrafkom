@@ -234,7 +234,7 @@ void background2(){
 void kotakDarah (){
     glPushMatrix();
     glTranslated(0,-1.5,0);
-    glBegin(GL_POLYGON);
+    glBegin(GL_POLYGON);zzzz
     glColor3f(0,0,0);
     glVertex2f(78.29, 45.53);
     glVertex2f(78.29, 44);
@@ -247,6 +247,32 @@ void kotakDarah (){
     glVertex2f(85, 44);
     glVertex2f(85, 42);
     glVertex2f(70.4, 42);
+    glEnd();
+    glPopMatrix();
+}
+
+void scoreKamu (){
+    glPushMatrix();
+    glTranslated(0,-0.7,0);
+    glBegin(GL_POLYGON);
+    glColor3f(0,0,0);
+    glVertex2f(78.28, 41.27);
+    glVertex2f(85, 41.27);
+    glVertex2f(85, 39.8);
+    glVertex2f(78.29, 39.8);
+    glEnd();
+    glPopMatrix();
+}
+
+void tempatScore (){
+    glPushMatrix();
+    glTranslated(0,-0.7,0);
+    glBegin(GL_POLYGON);
+    glColor3f(0.302, 0.302, 0.302);
+    glVertex2f(76.77, 39.8);
+    glVertex2f(85, 39.8);
+    glVertex2f(85, 37.07);
+    glVertex2f(76.77, 37.07);
     glEnd();
     glPopMatrix();
 }
@@ -274,6 +300,8 @@ void displayMe(void){
     glClear(GL_COLOR_BUFFER_BIT);
     background2();
     kotakDarah();
+    tempatScore();
+    scoreKamu();
     updatePoin(25);
 	glutSwapBuffers();
 }
