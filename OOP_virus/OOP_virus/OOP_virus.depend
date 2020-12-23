@@ -19,7 +19,7 @@
 	<stddef.h>
 	<GL/gl.h>
 
-976692172 c:\program files (x86)\codeblocks\mingw\include\gl\glut.h
+881786480 c:\program files (x86)\codeblocks\mingw\include\gl\glut.h
 	<windows.h>
 	<GL/gl.h>
 	<GL/glu.h>
@@ -257,6 +257,25 @@
 	"makeCube.h"
 
 1608098034 c:\users\core-i3\downloads\grafika komputer\mabokgrafkom\oop_virus\oop_virus\makecube.h
+	<GL/gl.h>
+	<GL/glu.h>
+	<GL/glut.h>
+
+1608657098 source:d:\itb\sem 3\new folder (2)\mabokgrafkom\oop_virus\oop_virus\main.cpp
+	<GL/gl.h>
+	<GL/glu.h>
+	<GL/glut.h>
+	<iostream>
+	<windows.h>
+	<GLUT/glut.h>
+	<GL/glut.h>
+	<stdlib.h>
+	<fstream>
+	<cstdlib>
+	<ctime>
+	"makeCube.h"
+
+1608657098 d:\itb\sem 3\new folder (2)\mabokgrafkom\oop_virus\oop_virus\makecube.h
 	<GL/gl.h>
 	<GL/glu.h>
 	<GL/glut.h>

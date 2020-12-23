@@ -112,6 +112,8 @@ void keyboard(unsigned char key, int x, int y){
     if (key==32 && !playStatus){
         playStatus=true;
         mode1Status=true;
+        gameOverStatus=false;
+
     }
     if (key==27){
         exit(0);
@@ -136,7 +138,6 @@ void collDokter(){
 	glVertex2f(colliderDokter[1],colliderDokter[2]);
 	glEnd();
 }
-
 
 void dokterObject(){
     glPushMatrix();
@@ -297,11 +298,10 @@ void dokterMove(){
 }
 
 void timerDokter(int){
+    glutTimerFunc(1000/30,timerDokter,0);
     if (playStatus){
-        cout << "===================================== " << "\n";
         dokterObject();
         glutPostRedisplay();
-        glutTimerFunc(1000/30,timerDokter,0);
         if (horDokter){
             colliderDokter[0]+=0.5;
             colliderDokter[1]+=0.5;
@@ -319,7 +319,7 @@ void timerDokter(int){
         if (colliderDokter[0]<=0){
             horDokter=true;
         }
-    }
+     }
 }
 
 void obatObject(){
@@ -940,17 +940,15 @@ void deleteVirus(){
 }
 
 void timerMode(int){
+    glutTimerFunc(5000,timerMode,0);
     if (playStatus){
-        //if (mode1Status){
+        if (mode1Status){
             glutTimerFunc(5000,timerMode,0);
             mode1Status=false;
             if(statusDeleteVirus){
                 status=true;
             }
-
-
-
-        //}
+        }
     }
 }
 
@@ -1836,7 +1834,7 @@ void displayMe(void){
         mode1();
         mode2();
     }
-    if(imunitas==0){
+    if(imunitas<=0){
         statusDeleteVirus=true;
         deleteVirus();
         playStatus=false;
