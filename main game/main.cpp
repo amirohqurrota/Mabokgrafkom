@@ -1432,19 +1432,14 @@ void kotakDarah (){
     glTranslated(0,-1.5,0);
     glBegin(GL_POLYGON);
     glColor3f(0,0,0);
-    glVertex2f(78.29, 45.53);
-    glVertex2f(78.29, 44);
-    glVertex2f(85, 44);
+    glVertex2f(75, 45.53);
+    glVertex2f(75, 43.6);
+    glVertex2f(85, 43.6);
     glVertex2f(85, 45.53);
     glEnd();
-
-    glBegin(GL_POLYGON); //outline
-    glVertex2f(70.4, 44);
-    glVertex2f(85, 44);
-    glVertex2f(85, 42);
-    glVertex2f(70.4, 42);
-    glEnd();
+    text(76, 44.3, "Imunitas", GLUT_BITMAP_TIMES_ROMAN_24,1,1,1);
     glPopMatrix();
+
 }
 
 void poinDarah(int x){
@@ -1465,6 +1460,35 @@ void updatePoin(){
         poinDarah(-i);
 }
 }
+void scoreKamu (){
+    glPushMatrix();
+    glTranslated(0,-0.7,0);
+    glBegin(GL_POLYGON);
+    glColor3f(0,0,0);
+    glVertex2f(75, 41.45);
+    glVertex2f(85, 41.45);
+    glVertex2f(85, 39.8);
+    glVertex2f(75, 39.8);
+    glEnd();
+    text(76, 40.5, "Score Kamu", GLUT_BITMAP_TIMES_ROMAN_24,1,1,1);
+    glPopMatrix();
+}
+
+void tempatScore (){
+    glPushMatrix();
+    glTranslated(0,-0.7,0);
+    glBegin(GL_POLYGON);
+    glColor3f(0.302, 0.302, 0.302);
+    glVertex2f(76.77, 39.8);
+    glVertex2f(85, 39.8);
+    glVertex2f(85, 37.07);
+    glVertex2f(76.77, 37.07);
+    glEnd();
+    //char A = char(scorePoin)
+    //text(76, 39, A, GLUT_BITMAP_TIMES_ROMAN_24,1,1,1);
+    glPopMatrix();
+}
+
 
 
 void background1(){
@@ -1737,9 +1761,70 @@ void background1(){
 
 }
 
+void objectOrang (int x,int y){
+    glPushMatrix();
+    glTranslated(x,y,0);
+    glBegin(GL_POLYGON); //tangan kiri
+    glColor3f(0.6,0.4,0.2);
+    glVertex2f(16.66,23.26);
+    glVertex2f(16.66,19.4);
+    glVertex2f(18.02,19.4);
+    glVertex2f(18.02,23.26);
+    glEnd();
+
+    glBegin(GL_POLYGON); //tangan kanan
+    glColor3f(0.6,0.4,0.2);
+    glVertex2f(22.41,23.26);
+    glVertex2f(22.41,19.4);
+    glVertex2f(21.03,19.4);
+    glVertex2f(21.03,23.26);
+    glEnd();
+
+    glBegin(GL_POLYGON); //badan
+    glColor3f(0.6,0.6,0.6);
+    glVertex2f(18.03,15.71);
+    glVertex2f(21.02,15.71);
+    glVertex2f(21.03,23.26);
+    glVertex2f(18.03,23.26);
+    glEnd();
+
+    glBegin(GL_POLYGON); //kepala
+    glColor3f(0.6,0.4,0.2);
+    glVertex2f(18.57,23.26);
+    glVertex2f(18.57,25.15);
+    glVertex2f(20.47,25.15);
+    glVertex2f(20.47,23.26);
+    glEnd();
+
+    glBegin(GL_POLYGON); //mulut
+    glColor3f(1,1,1);
+    glVertex2f(18.88,23.85);
+    glVertex2f(20.21,23.85);
+    glVertex2f(20.21,23.6);
+    glVertex2f(18.88,23.6);
+    glEnd();
+
+    glBegin(GL_POLYGON); //mata kiri
+    glColor3f(0,0,0);
+    glVertex2f(18.94,24.82);
+    glVertex2f(19.17,24.82);
+    glVertex2f(19.17,24.57);
+    glVertex2f(18.94,24.57);
+    glEnd();
+
+    glBegin(GL_POLYGON); //mata kanan
+    glColor3f(0,0,0);
+    glVertex2f(19.88,24.82);
+    glVertex2f(20.1,24.82);
+    glVertex2f(20.1,24.57);
+    glVertex2f(19.88,24.57);
+    glEnd();
+    glPopMatrix();
+}
+
 void background2(){
     glBegin(GL_POLYGON); //langit
-	glColor3f(0.639, 0.2, 1);
+	glColor3f(0.137, 0.161, 0.302);
 	glVertex2f(85, 15.2);
 	glVertex2f(0, 15.2);
 	glVertex2f(0, 45.53);
@@ -1771,7 +1856,7 @@ void background2(){
 	glEnd();
 
     glBegin(GL_POLYGON); //bulan
-    glColor3f(0.702, 0.702, 0.702);
+    glColor3f(0.722, 0.722, 0.137);
 	glVertex2f(19.72, 43.79);//Q3
 	glVertex2f(20.28, 43.65);//R3
 	glVertex2f(20.73, 43.35);//S3
@@ -1810,6 +1895,10 @@ void background2(){
 	glVertex2f(17.94905,43.78997);//D5
 
 	glEnd();
+	glPointSize(5);
+    glBegin(GL_POINTS); //bintang
+ 	glVertex2f(25,43.78997);
+ 	glEnd();
     glPopMatrix();
 
     glBegin(GL_POLYGON); //daun pohon
@@ -1907,64 +1996,21 @@ void background2(){
     glVertex2f(52.44,19.23);
     glVertex2f(49.45,19.23);
     glEnd();
-
-//OBJEK ORANG
-    glBegin(GL_POLYGON); //tangan kiri
-    glColor3f(0.6,0.4,0.2);
-    glVertex2f(16.66,23.26);
-    glVertex2f(16.66,19.4);
-    glVertex2f(18.02,19.4);
-    glVertex2f(18.02,23.26);
-    glEnd();
-
-    glBegin(GL_POLYGON); //tangan kanan
-    glColor3f(0.6,0.4,0.2);
-    glVertex2f(22.41,23.26);
-    glVertex2f(22.41,19.4);
-    glVertex2f(21.03,19.4);
-    glVertex2f(21.03,23.26);
-    glEnd();
-
-    glBegin(GL_POLYGON); //badan
-    glColor3f(0.6,0.6,0.6);
-    glVertex2f(18.03,15.71);
-    glVertex2f(21.02,15.71);
-    glVertex2f(21.03,23.26);
-    glVertex2f(18.03,23.26);
-    glEnd();
-
-    glBegin(GL_POLYGON); //kepala
-    glColor3f(0.6,0.4,0.2);
-    glVertex2f(18.57,23.26);
-    glVertex2f(18.57,25.15);
-    glVertex2f(20.47,25.15);
-    glVertex2f(20.47,23.26);
-    glEnd();
-
-    glBegin(GL_POLYGON); //mulut
-    glColor3f(1,1,1);
-    glVertex2f(18.88,23.85);
-    glVertex2f(20.21,23.85);
-    glVertex2f(20.21,23.6);
-    glVertex2f(18.88,23.6);
-    glEnd();
-
-    glBegin(GL_POLYGON); //mata kiri
-    glColor3f(0,0,0);
-    glVertex2f(18.94,24.82);
-    glVertex2f(19.17,24.82);
-    glVertex2f(19.17,24.57);
-    glVertex2f(18.94,24.57);
-    glEnd();
-
-    glBegin(GL_POLYGON); //mata kanan
-    glColor3f(0,0,0);
-    glVertex2f(19.88,24.82);
-    glVertex2f(20.1,24.82);
-    glVertex2f(20.1,24.57);
-    glVertex2f(19.88,24.57);
-    glEnd();
+    objectOrang(0,-3);
+    objectOrang(6,-2);
+    objectOrang(-12,-1);
+    objectOrang(-6,-4);
+    objectOrang(54,-10);
+    objectOrang(60,-8);
+    objectOrang(42,-10);
+    objectOrang(48,-6);
+    objectOrang(25,-5);
+    objectOrang(31,-3);
+    objectOrang(19,-4);
 }
+
+
+
 
 void gameOver() {
     glPushMatrix();
@@ -2181,8 +2227,8 @@ void gameOver() {
     glColor3f(0.576, 0.463, 0.153);
     glVertex2f(56.8688312322439, 36.6002343749999);
     glVertex2f(71.9872971413351, 36.6002343749999);
-    glVertex2f(71.8837460049714, 29.5587571022725);
-    glVertex2f(56.8688312322439, 29.4552059659088);
+    glVertex2f(71.9872971413351, 29.5587571022725);
+    glVertex2f(56.8688312322439, 29.5587571022725);
     glEnd();
     glColor3f(1,1,1);
     text(62.5, 35,"Score :",GLUT_BITMAP_TIMES_ROMAN_24,1,1,1);
@@ -2198,6 +2244,8 @@ void mode1(){
        background1();
         kotakDarah();
         updatePoin();
+        scoreKamu();
+        tempatScore();
         virusRand(5);
         virusDisplay(5);
         dokterObject();
@@ -2212,6 +2260,8 @@ void mode2(){
     if(!mode1Status && !gameOverStatus){
         background2();
         kotakDarah();
+        tempatScore();
+        scoreKamu();
         updatePoin();
         deleteVirus();
         virusRand(10);
