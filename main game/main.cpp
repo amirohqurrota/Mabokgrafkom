@@ -72,7 +72,7 @@ void text(int x, int y, const char *string, void *font, float r, float g, float 
 		glutBitmapCharacter(font, string[i]);
 	}
 }
-void menu(){
+void menu1(){
     glPushMatrix();//BG
     glScaled(0.6,0.4,0);
     glBegin(GL_POLYGON); //langit biru
@@ -315,7 +315,7 @@ void menu(){
     glScaled(1,1,0);
     glTranslated(38,7,0);
 
-    glLineWidth(70);
+    glLineWidth(8  );
     glBegin(GL_POLYGON); //APD luar
 	glColor3f(0.8f, 0.8f, 0.9f);
 	glVertex2f(1.86,9.83);//A
@@ -498,9 +498,20 @@ void dokterKeyboard(int key, int x, int y){
 
 void keyboard(unsigned char key, int x, int y){
     if (key==32 && !playStatus){
-        playStatus=true;
-        mode1Status=true;
-        gameOverStatus=false;
+        if(imunitas<=0){
+           gameOverStatus=false;
+            imunitas=30;
+            scorePoin=0;
+            status=true;
+            mode1Status=true;
+            bool statusDeleteVirus=true;
+        }
+        else{
+            playStatus=true;
+            mode1Status=true;
+        }
+
+
 
     }
     if (key==27){
@@ -2216,7 +2227,7 @@ void mode2(){
 void displayMe(void){
     glClear(GL_COLOR_BUFFER_BIT);
     if (!playStatus && !gameOverStatus){
-        menu();
+        menu1();
     }
     if(playStatus && imunitas>0){
         mode1();
