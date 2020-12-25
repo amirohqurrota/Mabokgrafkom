@@ -75,6 +75,51 @@ void background2(){
 	glVertex2f(17.94905,43.78997);//D5
 
 	glEnd();
+
+	glPointSize(7); //bintang
+	glBegin(GL_POINTS);
+	glVertex2f(25,43.7);
+	glEnd();
+	glPointSize(7);
+	glBegin(GL_POINTS);
+	glVertex2f(30,42.5);
+	glEnd();
+	glPointSize(7);
+	glBegin(GL_POINTS);
+	glVertex2f(35.43,41.3);
+	glEnd();
+	glPointSize(7);
+	glBegin(GL_POINTS);
+	glVertex2f(48,43.7);
+	glEnd();
+    glPointSize(7);
+	glBegin(GL_POINTS);
+	glVertex2f(49,41.2);
+	glEnd();
+    glPointSize(7);
+	glBegin(GL_POINTS);
+	glVertex2f(43,40.1);
+	glEnd();
+    glPointSize(7);
+	glBegin(GL_POINTS);
+	glVertex2f(55,40.1);
+	glEnd();
+    glPointSize(7);
+	glBegin(GL_POINTS);
+	glVertex2f(60,37.7);
+	glEnd();
+    glPointSize(7);
+	glBegin(GL_POINTS);
+	glVertex2f(10,37.7);
+	glEnd();
+    glPointSize(7);
+	glBegin(GL_POINTS);
+	glVertex2f(5,39.7);
+	glEnd();
+	glPointSize(7);
+	glBegin(GL_POINTS);
+	glVertex2f(70,35.7);
+	glEnd();
     glPopMatrix();
 
     glBegin(GL_POLYGON); //daun pohon
