@@ -1896,6 +1896,27 @@ void background2(){
 	glPointSize(5);
     glBegin(GL_POINTS); //bintang
  	glVertex2f(25,43.78997);
+	glVertex2f(25,43.7);
+	glVertex2f(25,43.7);
+	glVertex2f(20,40);
+	glVertex2f(15,36);
+	glVertex2f(10,43.7);
+	glVertex2f(13,38);
+	glVertex2f(21,29);
+	glVertex2f(12,18);
+	glVertex2f(11,19);
+	glVertex2f(10,21);
+	glVertex2f(15,36);
+	glVertex2f(30,42.5);
+	glVertex2f(35.43,41.3);
+	glVertex2f(48,43.7);
+	glVertex2f(49,41.2);
+	glVertex2f(43,40.1);
+	glVertex2f(55,40.1);
+	glVertex2f(60,37.7);
+	glVertex2f(10,37.7);
+	glVertex2f(5,39.7);
+	glVertex2f(70,35.7);
  	glEnd();
     glPopMatrix();
 
