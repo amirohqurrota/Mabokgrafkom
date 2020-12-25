@@ -1349,6 +1349,13 @@ void timerMode(int){
                 status=true;
             }
         }
+        else {
+            //glutTimerFunc(5000,timerMode,0);
+            mode1Status=true;
+            if(statusDeleteVirus){
+                status=true;
+            }
+        }
     }
 }
 
@@ -2306,6 +2313,9 @@ void displayMe(void){
         mode1();
         mode2();
         finalScore();
+        char a[1000];
+        //sprintf(a,"%d",imunitas);
+        //text(30, 30,a, GLUT_BITMAP_TIMES_ROMAN_24,0,0,0);
     }
     if(imunitas<=0){
 
@@ -2325,7 +2335,7 @@ int main(int argc, char** argv){
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
 	glutInitWindowSize(1368, 728);
 	glutInitWindowPosition(0,0);
-	glutCreateWindow("Hello world!");
+	glutCreateWindow("Awas Kopit");
 	glutDisplayFunc(displayMe);
 	glutSpecialFunc(dokterKeyboard);
 	glutKeyboardFunc(keyboard);
