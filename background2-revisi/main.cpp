@@ -234,7 +234,7 @@ void background2(){
 void kotakDarah (){
     glPushMatrix();
     glTranslated(0,-1.5,0);
-    glBegin(GL_POLYGON);zzzz
+    glBegin(GL_POLYGON);
     glColor3f(0,0,0);
     glVertex2f(78.29, 45.53);
     glVertex2f(78.29, 44);

@@ -43,6 +43,7 @@ int imunitas=30;
 int scorePoin=0;
 int pertambahanPoin=2;
 bool scoreStatus=true;
+char finalPoin[1000];
 
 bool playStatus=false;
 bool mode1Status=true;
@@ -1339,10 +1340,10 @@ void deleteVirus(){
 }
 
 void timerMode(int){
-    glutTimerFunc(5000,timerMode,0);
+    glutTimerFunc(15000,timerMode,0);
     if (playStatus){
         if (mode1Status){
-            glutTimerFunc(5000,timerMode,0);
+            //glutTimerFunc(5000,timerMode,0);
             mode1Status=false;
             if(statusDeleteVirus){
                 status=true;
@@ -1352,12 +1353,9 @@ void timerMode(int){
 }
 
 void timerScore(int){
+    glutTimerFunc(1000,timerScore,0);
     if (playStatus){
-        //if (mode1Status){
             scorePoin+=1;
-            glutTimerFunc(1000,timerScore,0);
-
-        //}
     }
 }
 
@@ -1390,15 +1388,13 @@ public:
         //int i=0;
         bool collDokterVirusX=arrayVirus[a].colliderVirus[1]<=colliderDokter[1]+5 && arrayVirus[a].colliderVirus[0]>=colliderDokter[0]-5;
         bool collDokterVirusY=arrayVirus[a].colliderVirus[2]<=colliderDokter[3];
-        //if (!collDokterVirusX || !collDokterVirusY){
         bool scoreStatusVirus=arrayVirus[a].colliderVirus[1]>=colliderDokter[1]+5 || arrayVirus[a].colliderVirus[0]<=colliderDokter[0]-5 ;
-            //cout << "masuk ke iF uba boll: " << scoreStatusVirus << "\n";
-        //}
+
         if (collDokterVirusX && collDokterVirusY && scoreStatusVirus){
             imunitas-=1;
 
-            cout << "imun berkurang: " << imunitas << "\n";
-            cout << "status 2 " << scoreStatusVirus << "\n";
+            //cout << "imun berkurang: " << imunitas << "\n";
+            //cout << "status 2 " << scoreStatusVirus << "\n";
             scoreStatusVirus=false;
         }
 }
@@ -1484,8 +1480,10 @@ void tempatScore (){
     glVertex2f(85, 37.07);
     glVertex2f(76.77, 37.07);
     glEnd();
-    //char A = char(scorePoin)
-    //text(76, 39, A, GLUT_BITMAP_TIMES_ROMAN_24,1,1,1);
+    char poin[1000];
+    sprintf(poin,"%d", scorePoin);
+    text(80, 38, poin, GLUT_BITMAP_TIMES_ROMAN_24,1,1,1);
+
     glPopMatrix();
 }
 
@@ -2009,15 +2007,17 @@ void background2(){
     objectOrang(19,-4);
 }
 
-
-
+void finalScore(){
+    if (imunitas>0){
+        int a = scorePoin;
+        sprintf(finalPoin,"%d", a);
+    }
+}
 
 void gameOver() {
     glPushMatrix();
     glTranslated(0, 5, 0);
     glLineWidth(15);
-
-
     glBegin(GL_LINES); //huruf G
 	glColor3f(1,0,0);
 	glVertex2f(22.5775965827964,28.5743484549706); //G
@@ -2234,10 +2234,11 @@ void gameOver() {
     text(62.5, 35,"Score :",GLUT_BITMAP_TIMES_ROMAN_24,1,1,1);
     glPopMatrix();
 
+
+    text(41.7, 17, finalPoin, GLUT_BITMAP_TIMES_ROMAN_24,1,1,1);
     text(38.5,10,"Press esc to exit",GLUT_BITMAP_HELVETICA_18,1,1,1);
     text(36.5,8,"Press spacebar to menu",GLUT_BITMAP_HELVETICA_18,1,1,1);
 }
-
 
 void mode1(){
     if(mode1Status && !gameOverStatus){
@@ -2280,10 +2281,13 @@ void displayMe(void){
         menu1();
     }
     if(playStatus && imunitas>0){
+            cout << scorePoin << "\n";
         mode1();
         mode2();
+        finalScore();
     }
     if(imunitas<=0){
+
         statusDeleteVirus=true;
         deleteVirus();
         playStatus=false;
