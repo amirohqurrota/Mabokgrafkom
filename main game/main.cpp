@@ -1767,6 +1767,111 @@ void background1(){
 	glVertex2f(93, 41);
 	glEnd();
 
+	//border
+	glLineWidth(10);
+	glBegin(GL_LINE_LOOP); //atap kiri
+	glColor3f(0,0,0);
+	glVertex2f(48, 65);
+	glVertex2f(63, 65);
+	glVertex2f(63, 60);
+	glVertex2f(48, 60);
+	glEnd();
+
+	glBegin(GL_LINE_LOOP); //badan kecil kiri
+	glColor3f(0,0,0);
+	glVertex2f(63, 60);
+	glVertex2f(49, 60);
+	glVertex2f(49, 36);
+	glVertex2f(63, 36);
+	glEnd();
+
+	glBegin(GL_LINE_LOOP); //kaca kiri atas
+	glColor3f(0,0,0);
+	glVertex2f(54, 57);
+	glVertex2f(54, 51);
+	glVertex2f(59, 51);
+	glVertex2f(59, 57);
+	glEnd();
+
+	glBegin(GL_LINE_LOOP); //kaca kiri bawah
+	glColor3f(0,0,0);
+	glVertex2f(54, 47);
+	glVertex2f(54, 41);
+	glVertex2f(59, 41);
+	glVertex2f(59, 47);
+	glEnd();
+
+	glBegin(GL_LINE_LOOP); //atap tengah
+	glColor3f(0,0,0);
+	glVertex2f(62, 81);
+	glVertex2f(62, 76);
+	glVertex2f(91, 76);
+	glVertex2f(91, 81);
+	glEnd();
+
+	glBegin(GL_LINE_LOOP); //badan tengah
+	glColor3f(0,0,0);
+	glVertex2f(63, 76);
+	glVertex2f(63, 30);
+	glVertex2f(90, 30);
+	glVertex2f(90, 76);
+	glEnd();
+
+	glBegin(GL_LINE_LOOP); //kaca tengah kiri
+	glColor3f(0,0,0);
+	glVertex2f(68, 55);
+	glVertex2f(73, 55);
+	glVertex2f(73, 50);
+	glVertex2f(68, 50);
+	glEnd();
+
+	glBegin(GL_LINE_LOOP); //kaca tengah kanan
+	glColor3f(0,0,0);
+	glVertex2f(80, 55);
+	glVertex2f(85, 55);
+	glVertex2f(85, 50);
+	glVertex2f(80, 50);
+	glEnd();
+
+	glBegin(GL_LINE_LOOP); //pintu abu
+	glColor3f(0,0,0);
+	glVertex2f(70, 45);
+	glVertex2f(82, 45);
+	glVertex2f(82, 30);
+	glVertex2f(70, 30);
+	glEnd();
+
+	glBegin(GL_LINE_LOOP); //atap kanan
+	glColor3f(0,0,0);
+	glVertex2f(90, 65);
+	glVertex2f(106, 65);
+	glVertex2f(106, 60);
+	glVertex2f(90, 60);
+	glEnd();
+
+	glBegin(GL_LINE_LOOP); //badan kanan
+	glColor3f(0,0,0);
+	glVertex2f(90, 60);
+	glVertex2f(105, 60);
+	glVertex2f(105, 36);
+	glVertex2f(90, 36);
+	glEnd();
+
+	glBegin(GL_LINE_LOOP); //kaca kanan atas
+	glColor3f(0,0,0);
+	glVertex2f(93, 57);
+	glVertex2f(98, 57);
+	glVertex2f(98, 51);
+	glVertex2f(93, 51);
+	glEnd();
+
+	glBegin(GL_LINE_LOOP); //kaca kanan bawah
+	glColor3f(0,0,0);
+	glVertex2f(93, 47);
+	glVertex2f(98, 47);
+	glVertex2f(98, 41);
+	glVertex2f(93, 41);
+	glEnd();
 
 	glPopMatrix();
 
