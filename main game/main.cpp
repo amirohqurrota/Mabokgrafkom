@@ -2133,6 +2133,88 @@ void background2(){
     glVertex2f(52.44,19.23);
     glVertex2f(49.45,19.23);
     glEnd();
+
+//Border
+    glLineWidth(10);
+    glBegin(GL_LINE_LOOP); //lantai
+    glColor3f(0,0,0);
+    glVertex2f(60.28,15.2);
+    glVertex2f(60.28,13.61);
+    glVertex2f(26.15,13.61);
+    glVertex2f(26.15,15.2);
+    glEnd();
+
+    glBegin(GL_LINE_LOOP); //badan bangunan
+    glColor3f(0,0,0);
+    glVertex2f(28.04,25.38);
+    glVertex2f(58.16,25.38);
+    glVertex2f(58.16,15.2);
+    glVertex2f(28.04,15.2);
+    glEnd();
+
+    glBegin(GL_LINE_LOOP); //atap1
+    glColor3f(0,0,0);
+    glVertex2f(26.17,25.39);
+    glVertex2f(27.87,28.43);
+    glVertex2f(58.16,28.43);
+    glVertex2f(59.84,25.4);
+    glEnd();
+
+    glBegin(GL_LINE_LOOP); //atap2
+    glColor3f(0,0,0);
+    glVertex2f(27.87,28.43);
+    glVertex2f(58.16,28.43);
+    glVertex2f(58.16,31.71);
+    glVertex2f(27.87,31.71);
+    glEnd();
+
+    glBegin(GL_LINE_LOOP); //atap3
+    glColor3f(0,0,0);
+    glVertex2f(34.67,31.71);
+    glVertex2f(38.99,37.59);
+    glVertex2f(47.65,37.6);
+    glVertex2f(51.99,31.72);
+    glEnd();
+
+    glBegin(GL_LINE_LOOP); //pintu cafe
+    glColor3f(0,0,0);
+    glVertex2f(41.4,23.6);
+    glVertex2f(44.5,23.6);
+    glVertex2f(44.49,15.2);
+    glVertex2f(41.4,15.2);
+    glEnd();
+
+    glBegin(GL_LINE_LOOP); //jendela kiri1
+    glColor3f(0,0,0);
+    glVertex2f(32.66,23.58);
+    glVertex2f(35.66,23.58);
+    glVertex2f(35.66,19.23);
+    glVertex2f(32.66,19.23);
+    glEnd();
+
+    glBegin(GL_LINE_LOOP); //jendelakiri2
+    glColor3f(0,0,0);
+    glVertex2f(37.07,23.6);
+    glVertex2f(40.05,23.6);
+    glVertex2f(40.05,19.23);
+    glVertex2f(37.07,19.23);
+    glEnd();
+
+    glBegin(GL_LINE_LOOP); //jendela kanan1
+    glColor3f(0,0,0);
+    glVertex2f(45.42,23.57);
+    glVertex2f(48.41,23.57);
+    glVertex2f(48.41,19.23);
+    glVertex2f(45.42,19.23);
+    glEnd();
+
+    glBegin(GL_LINE_LOOP); //jendela kanan2
+    glColor3f(0,0,0);
+    glVertex2f(49.45,23.6);
+    glVertex2f(52.44,23.6);
+    glVertex2f(52.44,19.23);
+    glVertex2f(49.45,19.23);
+    glEnd();
     objectOrang(0,-3);
     objectOrang(6,-2);
     objectOrang(-12,-1);
