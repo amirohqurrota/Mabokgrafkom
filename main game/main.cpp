@@ -33,7 +33,7 @@ float colliderDokter[4]={0,7,0,11};
 float gerakDokter[2]={0,0};
 bool horDokter=true;
 
-Virus arrayVirus[20];
+Virus arrayVirus[10];
 
 int i;
 bool status=true; //andVirus
@@ -510,6 +510,7 @@ void keyboard(unsigned char key, int x, int y){
         else{
             playStatus=true;
             mode1Status=true;
+
         }
 
 
@@ -1343,18 +1344,23 @@ void timerMode(int){
     glutTimerFunc(15000,timerMode,0);
     if (playStatus){
         if (mode1Status){
+            statusDeleteVirus=true;
             //glutTimerFunc(5000,timerMode,0);
             mode1Status=false;
             if(statusDeleteVirus){
                 status=true;
             }
+            statusDeleteVirus=true;
+
         }
         else {
             //glutTimerFunc(5000,timerMode,0);
+            statusDeleteVirus=true;
             mode1Status=true;
             if(statusDeleteVirus){
                 status=true;
             }
+
         }
     }
 }
@@ -1419,8 +1425,8 @@ void collisionDokterVirus(){
         CollisionVirus(7);
         CollisionVirus(8);
         CollisionVirus(9);
-        CollisionVirus(10);
-        CollisionVirus(11);
+        //CollisionVirus(10);
+        //CollisionVirus(11);
 
     //}
 }
@@ -2275,12 +2281,14 @@ void mode1(){
         updatePoin();
         scoreKamu();
         tempatScore();
+        deleteVirus();
         virusRand(5);
         virusDisplay(5);
         dokterObject();
         obatObject();
         score();
         status=false; //untuk timer random virus
+        statusDeleteVirus=false;
     }
 
 }
